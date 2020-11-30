@@ -13,6 +13,8 @@ in {
     pkgs.moreutils
     glab
     pkgs.nixfmt
+    pkgs.gitAndTools.gh
+    pkgs.keybase
   ];
   nixpkgs.config.allowUnfree = true;
   programs.zsh = {
@@ -58,6 +60,7 @@ in {
       vim-auto-save
       vimagit
       coc-nvim
+      vim-nix
     ];
     extraConfig = ''
 
