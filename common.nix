@@ -16,6 +16,7 @@ in {
     pkgs.gitAndTools.gh
     pkgs.keybase
     pkgs.doit
+    pkgs.gnupg
   ];
   nixpkgs.config.allowUnfree = true;
   programs.zsh = {
