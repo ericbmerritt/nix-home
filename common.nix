@@ -8,17 +8,22 @@ in {
     pkgs.tmux
     pkgs.emacs
     pkgs.par
-    pkgs.nodejs
     pkgs.jq
     pkgs.moreutils
     glab
     pkgs.nixfmt
     pkgs.gitAndTools.gh
-    pkgs.keybase
     pkgs.doit
-    pkgs.gnupg
+    pkgs.awscli
+    pkgs.ngrok
+    pkgs.nixFlakes
+    pkgs.cachix
+
   ];
   nixpkgs.config.allowUnfree = true;
+
+  programs.gpg.enable = true;
+
   programs.zsh = {
     enable = true;
     oh-my-zsh = {
@@ -38,6 +43,11 @@ in {
     enable = true;
     userName = "Eric B. Merritt";
     userEmail = "eric@merritt.tech";
+
+    signing = {
+      key = "97A3B8E0AC5DEE95";
+      signByDefault = true;
+    };
   };
 
   programs.fzf = {
@@ -63,6 +73,10 @@ in {
       vimagit
       coc-nvim
       vim-nix
+      typescript-vim
+      vim-jsx-typescript
+      vim-graphql
+      vim-better-whitespace
     ];
     extraConfig = ''
 
@@ -77,15 +91,21 @@ in {
                 filetype plugin indent on
 
                 " Gruvbox Setup
-                set termguicolors
                 colorscheme gruvbox
-                set background=light 
+                set background=light
 
                 " Autosave setup
                 let g:auto_save = 1
                 let g:auto_save_events = ["InsertLeave", "TextChanged",  "TextChangedI", "CursorHold", "CursorHoldI", "CompleteDone"]
+                augroup magit
+                  au!
+                  au FileType magit let b:auto_save = 0
+                augroup END
+
                 set autoread
                 set noswapfile
+
+
 
                 " Line number management
                 set number relativenumber
@@ -100,9 +120,12 @@ in {
                 set softtabstop=2
                 set signcolumn=yes
 
+                " Filetype specific setups
+                autocmd FileType asciidoc setlocal formatoptions-=t
+
                 " Use the system clipboard for copy/past
                 set clipboard=unnamed
-                
+
                 " Coc Setup
                 " Use tab for trigger completion with characters ahead and navigate.
                 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -119,9 +142,16 @@ in {
                 endfunction
 
                 let g:coc_user_config = {
-      	    \ 'rust-client.disableRustup': v:true,
+      	          \ 'rust-client.disableRustup': v:false,
                   \ 'rust.clippy_preference': 'on'
                 \ }
+
+                let g:coc_global_extensions = [
+                  \ 'coc-tsserver',
+                  \ 'coc-prettier',
+                  \ 'coc-eslint'
+                \ ]
+
                 " Use K to show documentation in preview window.
                 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -133,20 +163,44 @@ in {
                   endif
                 endfunction
 
-                
+
                 " Add `:Format` command to format current buffer.
                 command! -nargs=0 Format :call CocAction('format')
-              
+
                 " Add `:OR` command for organize imports of the current buffer.
                 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-                
+
                 " Add `:Next` and `:Previous` commands for errors
                 command! -nargs=0 CNext :call CocAction('diagnosticNext')<CR>
                 command! -nargs=0 CPrev :call CocAction('diagnosticPrevious')<CR>
+
+                " JS/TS commands
+                autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+                autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+
+                " Rust commands
+                autocmd filetype rust setlocal makeprg=cargo\ build
+
+                " Trailing Whitespace Management
+                fun! TrimWhitespace()
+                  let l:save = winsaveview()
+                  keeppatterns %s/\s\+$//e
+                  call winrestview(l:save)
+                endfun
+
+                command! TrimWhitespace call TrimWhitespace()
               '';
 
   };
 
   home.file = { ".tmux.conf" = { source = ./tmux.conf; }; };
 
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+    grabKeyboardAndMouse = true;
+    pinentryFlavor = "curses";
+    defaultCacheTtl = 10800;
+    maxCacheTtl = 10800;
+  };
 }
