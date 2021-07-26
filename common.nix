@@ -11,18 +11,13 @@ in {
     pkgs.jq
     pkgs.moreutils
     glab
-    pkgs.nixfmt
     pkgs.gitAndTools.gh
-    pkgs.doit
-    pkgs.awscli
     pkgs.ngrok
     pkgs.nixFlakes
     pkgs.cachix
-
+    pkgs.nodejs
   ];
   nixpkgs.config.allowUnfree = true;
-
-  programs.gpg.enable = true;
 
   programs.zsh = {
     enable = true;
@@ -38,16 +33,20 @@ in {
 
   programs.command-not-found.enable = true;
 
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv = {
+      enable = true;
+      enableFlakes = true;
+    };
+  };
+
   programs.git = {
     package = pkgs.gitAndTools.gitFull;
     enable = true;
     userName = "Eric B. Merritt";
     userEmail = "eric@merritt.tech";
-
-    signing = {
-      key = "97A3B8E0AC5DEE95";
-      signByDefault = true;
-    };
   };
 
   programs.fzf = {
@@ -105,8 +104,6 @@ in {
                 set autoread
                 set noswapfile
 
-
-
                 " Line number management
                 set number relativenumber
 
@@ -119,6 +116,10 @@ in {
                 set shiftwidth=2
                 set softtabstop=2
                 set signcolumn=yes
+
+                " Maintain undo history between sessions
+                set undodir=~/.vim/undodir
+                set undofile
 
                 " Filetype specific setups
                 autocmd FileType asciidoc setlocal formatoptions-=t
@@ -142,7 +143,7 @@ in {
                 endfunction
 
                 let g:coc_user_config = {
-      	          \ 'rust-client.disableRustup': v:false,
+      	          \ 'rust-client.disableRustup': v:true,
                   \ 'rust.clippy_preference': 'on'
                 \ }
 
@@ -189,12 +190,15 @@ in {
                 endfun
 
                 command! TrimWhitespace call TrimWhitespace()
+
+                set spell spelllang=en_us
               '';
 
   };
 
   home.file = { ".tmux.conf" = { source = ./tmux.conf; }; };
 
+  programs.gpg.enable = true;
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
