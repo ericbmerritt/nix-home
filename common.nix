@@ -14,25 +14,12 @@ in {
     pkgs.moreutils
     glab
     pkgs.gitAndTools.gh
-    pkgs.ngrok-2
     pkgs.nixFlakes
     pkgs.cachix
     pkgs.nodejs
     pkgs.fossil
+    pkgs.awscli2
   ];
-  nixpkgs.config.allowUnfree = true;
-
-  services.ngrok = {
-    enable = true;
-    package = pkgs.ngrok-2;
-    authtoken = "1owaaTBBv8qCLgQ43HF1XgFjsGm_2GjQ2JaYMqZopukiuajTy";
-    tunnels = {
-      ssh = {
-        proto = "tcp";
-        addr = 22;
-      };
-    };
-  };
   programs.zsh = {
     enable = true;
     oh-my-zsh = {
