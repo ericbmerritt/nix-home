@@ -19,6 +19,7 @@ in {
     pkgs.taplo
     pkgs.wezterm
     pkgs.nodePackages_latest.prettier
+    pkgs.lazygit
   ];
   programs.zsh = {
     enable = true;
@@ -30,14 +31,6 @@ in {
       EDITOR = "${pkgs.neovim}/bin/nvim";
       ZSH_DISABLE_COMPFIX = "true";
     };
-
-    initExtra = ''
-      . $HOME/.nvm/nvm.sh
-
-      autoload -Uz compinit bashcompinit
-      compinit
-      bashcompinit
-    '';
   };
 
   programs.command-not-found.enable = true;
@@ -61,82 +54,115 @@ in {
     defaultCommand = "${pkgs.fd}/bin/fd --type f --hidden --follow --exclude .git";
   };
 
+  programs.zellij = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  xdg.configFile."zellij/layouts/landbaron.kdl" = {
+    enable = true;
+    text = ''  
+      layout {
+        pane size=1 borderless=true {
+          plugin location="zellij:tab-bar"
+        }        
+        pane split_direction="vertical" {
+          pane split_direction="horizontal" {
+            pane {
+              cwd "workspace/landbaron"
+            }
+            pane {
+              cwd "workspace/landbaron"
+              command "lazygit"
+            }
+          }
+          pane {
+            cwd "workspace/landbaron"
+          } 
+        }   
+        pane size=2 borderless=true {
+          plugin location="zellij:status-bar"
+        }   
+      }
+     '';
+  };  
+
   programs.helix = {
     enable = true;
-    languages = 
-      {
-        language = [
-          {
-            name = "markdown";
-            scope = "source.md";
-            injection-regex = "md|markdown";
-            file-types = ["md" "markdown" "PULLREQ_EDITMSG"];
-            language-server = {
-              command = "${pkgs.efm-langserver}/bin/efm-langserver";
-              args = [];
-            };
-            indent = {
-              tab-width = 2;
-              unit = "  ";
-            };
-          }
-          {
-            name = "json";
-            scope = "source.json";
-            injection-regex = "json";
-            file-types = ["json" "jsonc" "arb" "jtd"];
-            roots = [];
-            language-server = {
-              command = "${pkgs.nodePackages_latest.vscode-json-languageserver-bin}/bin/json-languageserver";
-              args = ["--stdio"];
-            };
-            auto-format = true;
-            config = {"provideFormatter" = true;};
-            indent = {
-              tab-width = 2;
-              unit = "  ";
-            };
-          }
-          {
-            name = "typescript";
-            scope = "source.ts";
-            injection-regex = "(ts|typescript)";
-            file-types = ["ts" "mts" "cts"];
-            shebangs = [];
-            roots = [];
-            language-server = {
-              command = "${pkgs.nodePackages_latest.typescript-language-server}/bin/typescript-language-server";
-              args = ["--stdio"];
-              language-id = "typescript";
-            };
-            indent = {
-              tab-width = 2;
-              unit = "  ";
-            };
-            auto-format = true;
-            formatter = {
-              command = "${pkgs.nodePackages_latest.prettier}/bin/prettier";
-              args = ["--stdin-filepath" "tmp.ts" "--"];
-            };
-          }
-          {
-            name = "rust";
-            config = {
-              cachePriming = {enable = false;};
-              diagnostics = {experimental = {enable = true;};};
-            };
-            language-server = {
-              rust-analyzer = {
-                config = {
-                  check = {
-                    command = "clippy";
-                  };
+    languages = {
+      language = [
+        {
+          name = "markdown";
+          scope = "source.md";
+          injection-regex = "md|markdown";
+          file-types = ["md" "markdown" "PULLREQ_EDITMSG"];
+          language-server = {
+            command = "${pkgs.efm-langserver}/bin/efm-langserver";
+            args = [];
+          };
+          indent = {
+            tab-width = 2;
+            unit = "  ";
+          };
+        }
+        {
+          name = "json";
+          scope = "source.json";
+          injection-regex = "json";
+          file-types = ["json" "jsonc" "arb" "jtd"];
+          roots = [];
+          language-server = {
+            command = "${pkgs.nodePackages_latest.vscode-json-languageserver-bin}/bin/json-languageserver";
+            args = ["--stdio"];
+          };
+          auto-format = true;
+          config = {"provideFormatter" = true;};
+          indent = {
+            tab-width = 2;
+            unit = "  ";
+          };
+        }
+        {
+          name = "typescript";
+          scope = "source.ts";
+          injection-regex = "(ts|typescript)";
+          file-types = ["ts" "mts" "cts"];
+          shebangs = [];
+          roots = [];
+          language-server = {
+            command = "${pkgs.nodePackages_latest.typescript-language-server}/bin/typescript-language-server";
+            args = ["--stdio"];
+            language-id = "typescript";
+          };
+          indent = {
+            tab-width = 2;
+            unit = "  ";
+          };
+          auto-format = true;
+          formatter = {
+            command = "${pkgs.nodePackages_latest.prettier}/bin/prettier";
+            args = ["--stdin-filepath" "tmp.ts" "--"];
+          };
+        }
+        {
+          name = "rust";
+          config = {
+            cachePriming = {enable = false;};
+            diagnostics = {experimental = {enable = true;};};
+          };
+          language-server = {
+            command = "rust-analyzer";
+            rust-analyzer = {
+              config = {
+                check = {
+                  command = "clippy";
                 };
               };
             };
-          }
-        ];
-      };
+          };
+        }
+      ];
+    };
     settings = {
       theme = "penumbra+";
       editor = {
