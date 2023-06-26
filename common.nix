@@ -54,6 +54,23 @@ in {
     defaultCommand = "${pkgs.fd}/bin/fd --type f --hidden --follow --exclude .git";
   };
 
+  programs.wezterm = {
+    enable = true;
+    extraConfig = ''
+
+      local wezterm = require 'wezterm'
+      local config = {}
+          
+      if wezterm.config_builder then
+        config = wezterm.config_builder()
+      end
+
+      config.enable_tab_bar = false
+
+      return config
+    '';
+  };
+
   programs.zellij = {
     enable = true;
     enableZshIntegration = true;
@@ -146,6 +163,7 @@ in {
         }
         {
           name = "rust";
+          auto-format = true;
           config = {
             cachePriming = {enable = false;};
             diagnostics = {experimental = {enable = true;};};
