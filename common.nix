@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  glab = pkgs.callPackage ./glab {};
+  ihp-new = pkgs.callPackage ./ihp-new {};
 in {
   imports = [./services/ngrok.nix];
 
@@ -20,6 +20,9 @@ in {
     pkgs.wezterm
     pkgs.nodePackages_latest.prettier
     pkgs.lazygit
+    ihp-new
+    pkgs.cachix
+    pkgs.fossil
   ];
   programs.zsh = {
     enable = true;
@@ -95,6 +98,34 @@ in {
           }
           pane {
             cwd "workspace/landbaron"
+          } 
+        }   
+        pane size=2 borderless=true {
+          plugin location="zellij:status-bar"
+        }   
+      }
+     '';
+  };
+  
+  xdg.configFile."zellij/layouts/blowingupbarriers.kdl" = {
+    enable = true;
+    text = ''  
+      layout {
+        pane size=1 borderless=true {
+          plugin location="zellij:tab-bar"
+        }        
+        pane split_direction="vertical" {
+          pane split_direction="horizontal" {
+            pane {
+              cwd "workspace/blowingupbarriers"
+            }
+            pane {
+              cwd "workspace/blowingupbarriers"
+              command "lazygit"
+            }
+          }
+          pane {
+            cwd "workspace/blowingupbarriers"
           } 
         }   
         pane size=2 borderless=true {
