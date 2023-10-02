@@ -140,6 +140,23 @@ in {
     languages = {
       language = [
         {
+          name = "python";
+          formatter = { command = "black"; args = ["--quiet" "-"]; };
+          auto-format = true;
+          roots = ["requirements.txt"];
+          config = {};
+          scope = "source.python";
+          injection-regex = "python";
+          file-types = ["py""pyi""py3""pyw""ptl" ".pythonstartup" ".pythonrc" "SConstruct"];
+          shebangs = ["python"];
+          comment-token = "#";
+          indent = { tab-width = 4; unit = "    "; };
+          language-server = {
+            command = "pyright-langserver";
+            args = ["--stdio"]; 
+          };
+        }
+        {
           name = "markdown";
           scope = "source.md";
           injection-regex = "md|markdown";
