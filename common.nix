@@ -139,6 +139,10 @@ in {
     enable = true;
     languages = {
       language-server = {
+        vale-lsp = {
+          command = "vale-lsp";
+          args = [];
+        };
         efm = {
           command = "pyright-langserver";
           args = ["--stdio"];
@@ -194,7 +198,7 @@ in {
             tab-width = 4;
             unit = "    ";
           };
-          language-servers = ["pyright" "ruff-lsp"];
+          language-servers = ["pyright" "ruff-lsp" "vale-lsp"];
         }
         {
           name = "markdown";
