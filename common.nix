@@ -140,7 +140,7 @@ in {
     languages = {
       language-server = {
         vale-lsp = {
-          command = "vale-lsp";
+          command = "vale-ls";
           args = [];
         };
         efm = {
