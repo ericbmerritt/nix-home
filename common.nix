@@ -141,6 +141,7 @@ in {
       language-server = {
         vale-lsp = {
           command = "vale-ls";
+          config = {};
           args = [];
         };
         efm = {
@@ -149,6 +150,7 @@ in {
         };
         pyright = {
           command = "pyright-langserver";
+          config = {};
           args = ["--stdio"];
         };
         ruff-lsp = {
@@ -184,11 +186,11 @@ in {
         {
           name = "python";
           formatter = {
-            command = "black";
-            args = ["--quiet" "-"];
+            command = "ruff";
+            args = ["format" "--quiet" "-"];
           };
           auto-format = true;
-          roots = ["requirements.txt"];
+          roots = ["pyproject.toml" "requirements.txt" "setup.py"];
           scope = "source.python";
           injection-regex = "python";
           file-types = ["py" "pyi" "py3" "pyw" "ptl" ".pythonstartup" ".pythonrc" "SConstruct"];
