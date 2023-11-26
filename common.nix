@@ -144,8 +144,8 @@ in {
           args = [];
         };
         efm = {
-          command = "pyright-langserver";
-          args = ["--stdio"];
+          command = "${pkgs.efm-langserver}/bin/efm-langserver";
+          args = [];
         };
         pyright = {
           command = "pyright-langserver";
