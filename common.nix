@@ -219,6 +219,12 @@ in {
         ruff-lsp = {
           command = "ruff-lsp";
           args = [];
+          config = {
+            settings = {
+              args = "--preview";
+              run = "onSave";
+            };
+          };
         };
         json = {
           command = "${pkgs.nodePackages_latest.vscode-json-languageserver-bin}/bin/json-languageserver";
@@ -248,10 +254,6 @@ in {
       language = [
         {
           name = "python";
-          formatter = {
-            command = "ruff";
-            args = ["format" "--quiet" "-"];
-          };
           auto-format = true;
           roots = ["pyproject.toml" "requirements.txt" "setup.py"];
           scope = "source.python";
