@@ -250,6 +250,18 @@ in {
             };
           };
         };
+        yaml = {
+          command = "yaml-language-server";
+          args = ["--stdio"];
+          config = {
+            yaml = {
+              validate = true;
+              schemaStore = {enable=true;};
+              schemas = {Taskfile = "/*-task.yaml";};
+              format = {enable = true;};
+            };
+          };
+        };
       };
       language = [
         {
@@ -286,6 +298,15 @@ in {
           roots = [];
           language-servers = ["json"];
           auto-format = true;
+          indent = {
+            tab-width = 2;
+            unit = "  ";
+          };
+        }
+        {
+          name = "yaml";
+          file-types = ["yaml" "yml"];
+          language-servers = ["yaml"];
           indent = {
             tab-width = 2;
             unit = "  ";
