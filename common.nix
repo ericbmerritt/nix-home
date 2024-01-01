@@ -16,6 +16,7 @@ in {
     pkgs.nodePackages_latest.vscode-json-languageserver-bin
     pkgs.nodePackages_latest.yaml-language-server
     pkgs.nodePackages_latest.typescript-language-server
+    pkgs.nodePackages_latest.vscode-html-languageserver-bin
     pkgs.taplo
     pkgs.wezterm
     pkgs.nodePackages_latest.prettier
@@ -24,6 +25,8 @@ in {
     pkgs.cachix
     pkgs.fossil
     pkgs.nushell
+    pkgs.nil
+    pkgs.shell_gpt
   ];
 
   home.file.".config/nushell/env.nu".text = ''
@@ -231,6 +234,11 @@ in {
           args = ["--stdio"];
           config = {"provideFormatter" = true;};
         };
+        html = {
+          command = "${pkgs.nodePackages_latest.vscode-html-languageserver-bin}/bin/html-languageserver";
+          args = ["--stdio"];
+          config = {"provideFormatter" = true;};
+        };
         typescript = {
           command = "${pkgs.nodePackages_latest.typescript-language-server}/bin/typescript-language-server";
           args = ["--stdio"];
@@ -297,6 +305,19 @@ in {
           file-types = ["json" "jsonc" "arb" "jtd"];
           roots = [];
           language-servers = ["json"];
+          auto-format = true;
+          indent = {
+            tab-width = 2;
+            unit = "  ";
+          };
+        }
+        {
+          name = "html";
+          scope = "source.html";
+          injection-regex = "html";
+          file-types = ["html"];
+          roots = [];
+          language-servers = ["html"];
           auto-format = true;
           indent = {
             tab-width = 2;
