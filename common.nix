@@ -27,6 +27,9 @@ in {
     pkgs.nushell
     pkgs.nil
     pkgs.shell_gpt
+    pkgs.mosh
+    pkgs.oxlint
+    pkgs.alejandra
   ];
 
   home.file.".config/nushell/env.nu".text = ''
@@ -144,8 +147,7 @@ in {
       default_shell = "${pkgs.nushell}/bin/nu";
     };
   };
-
-  xdg.configFile."zellij/layouts/landbaron.kdl" = {
+  xdg.configFile."zellij/layouts/default.kdl" = {
     enable = true;
     text = ''
       layout {
@@ -155,43 +157,17 @@ in {
         pane split_direction="vertical" {
           pane split_direction="horizontal" {
             pane {
-              cwd "workspace/landbaron"
             }
             pane {
-              cwd "workspace/landbaron"
-              command "lazygit"
             }
           }
-          pane {
-            cwd "workspace/landbaron"
-          }
-        }
-        pane size=2 borderless=true {
-          plugin location="zellij:status-bar"
-        }
-      }
-    '';
-  };
-
-  xdg.configFile."zellij/layouts/blowingupbarriers.kdl" = {
-    enable = true;
-    text = ''
-      layout {
-        pane size=1 borderless=true {
-          plugin location="zellij:tab-bar"
-        }
-        pane split_direction="vertical" {
           pane split_direction="horizontal" {
             pane {
-              cwd "workspace/blowingupbarriers"
             }
             pane {
-              cwd "workspace/blowingupbarriers"
-              command "lazygit"
             }
-          }
-          pane {
-            cwd "workspace/blowingupbarriers"
+            pane {
+            }
           }
         }
         pane size=2 borderless=true {
@@ -264,14 +240,42 @@ in {
           config = {
             yaml = {
               validate = true;
-              schemaStore = {enable=true;};
+              schemaStore = {enable = true;};
               schemas = {Taskfile = "/*-task.yaml";};
               format = {enable = true;};
             };
           };
         };
       };
+      grammar = [
+        {
+          name = "htmldjango";
+          source = {
+            git = "https://github.com/interdependence/tree-sitter-htmldjango";
+            rev = "8873e3df89f9ea1d33f6235e516b600009288557";
+          };
+        }
+      ];
+
       language = [
+        {
+          name = "htmldjango";
+          auto-format = true;
+          roots = [];
+          scope = "source.htmldjango";
+          injection-regex = "python";
+          file-types = ["djt"];
+          indent = {
+            tab-width = 4;
+            unit = "    ";
+          };
+
+          formatter = {
+            command = "${pkgs.djlint}/bin/djlint";
+            args = ["-" "--reformat" "--quiet"];
+          };
+          language-servers = [];
+        }
         {
           name = "python";
           auto-format = true;
