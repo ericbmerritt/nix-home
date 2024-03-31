@@ -27,6 +27,8 @@ in {
     pkgs.mosh
     pkgs.oxlint
     pkgs.alejandra
+    pkgs.jujutsu
+    pkgs.meld
   ];
 
   home.file.".config/nushell/env.nu".text = ''
