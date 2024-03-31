@@ -107,6 +107,7 @@ in {
     enable = true;
     settings = {
       add_newline = true;
+      command_timeout = 3000;
       character = {
         success_symbol = "[➜](bold green)";
         error_symbol = "[➜](bold red)";
