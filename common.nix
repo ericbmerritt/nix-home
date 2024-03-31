@@ -10,7 +10,6 @@ in {
     pkgs.nixFlakes
     pkgs.ripgrep
     pkgs.flyctl
-    pkgs.nushell
     pkgs.wget
     pkgs.efm-langserver
     pkgs.nodePackages_latest.vscode-json-languageserver-bin
@@ -21,9 +20,7 @@ in {
     pkgs.wezterm
     pkgs.nodePackages_latest.prettier
     pkgs.lazygit
-    ihp-new
     pkgs.cachix
-    pkgs.fossil
     pkgs.nushell
     pkgs.nil
     pkgs.shell_gpt
