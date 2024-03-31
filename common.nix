@@ -1,6 +1,4 @@
-{pkgs, ...}: let
-  ihp-new = pkgs.callPackage ./ihp-new {};
-in {
+{pkgs, ...}: {
   imports = [./services/ngrok.nix];
 
   home.packages = [
