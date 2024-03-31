@@ -1,9 +1,8 @@
-{pkgs, ...}: let
-  ihp-new = pkgs.callPackage ./ihp-new {};
-in {
+{pkgs, ...}: {
   imports = [./services/ngrok.nix];
 
   home.packages = [
+    pkgs.awscli2
     pkgs.tmux
     pkgs.jq
     pkgs.moreutils
@@ -12,29 +11,29 @@ in {
     pkgs.flyctl
     pkgs.wget
     pkgs.efm-langserver
-    pkgs.nodePackages_latest.vscode-json-languageserver-bin
+    pkgs.nodePackages_latest.vscode-langservers-extracted
     pkgs.nodePackages_latest.yaml-language-server
     pkgs.nodePackages_latest.typescript-language-server
-    pkgs.nodePackages_latest.vscode-html-languageserver-bin
     pkgs.taplo
-    pkgs.wezterm
     pkgs.nodePackages_latest.prettier
     pkgs.lazygit
     pkgs.cachix
     pkgs.nushell
     pkgs.nil
-    pkgs.shell_gpt
     pkgs.mosh
     pkgs.oxlint
     pkgs.alejandra
     pkgs.jujutsu
     pkgs.meld
+    pkgs.devenv
+    pkgs.git-lfs
+    pkgs.python3
   ];
 
   home.file.".config/nushell/env.nu".text = ''
     mkdir ~/.cache/carapace
     carapace _carapace nushell | save --force ~/.cache/carapace/init.nu
-
+    open ~/.config/secrets/secrets.nu | from toml | load-env
     do --env {
       let ssh_agent_file = (
           $nu.temp-path | path join $"ssh-agent-($env.USER).nuon"
@@ -149,7 +148,7 @@ in {
   };
 
   programs.wezterm = {
-    enable = true;
+    enable = false;
     extraConfig = ''
 
       local wezterm = require 'wezterm'
@@ -231,12 +230,12 @@ in {
           };
         };
         json = {
-          command = "${pkgs.nodePackages_latest.vscode-json-languageserver-bin}/bin/json-languageserver";
+          command = "${pkgs.nodePackages_latest.vscode-langservers-extracted}/bin/json-languageserver";
           args = ["--stdio"];
           config = {"provideFormatter" = true;};
         };
         html = {
-          command = "${pkgs.nodePackages_latest.vscode-html-languageserver-bin}/bin/html-languageserver";
+          command = "${pkgs.nodePackages_latest.vscode-langservers-extracted}/bin/html-languageserver";
           args = ["--stdio"];
           config = {"provideFormatter" = true;};
         };
@@ -369,7 +368,7 @@ in {
           file-types = ["ts" "mts" "cts"];
           shebangs = [];
           roots = [];
-          language-servers = ["typescript"];
+          language-servers = ["typescript" "gpt"];
           indent = {
             tab-width = 2;
             unit = "  ";
@@ -383,7 +382,7 @@ in {
         {
           name = "rust";
           auto-format = true;
-          language-servers = ["rust"];
+          language-servers = ["rust" "gpt"];
         }
       ];
     };
