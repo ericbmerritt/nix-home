@@ -182,14 +182,8 @@
           pane split_direction="horizontal" {
             pane {
             }
-            pane {
-            }
           }
           pane split_direction="horizontal" {
-            pane {
-            }
-            pane {
-            }
             pane {
             }
           }
