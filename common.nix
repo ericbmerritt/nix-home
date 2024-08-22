@@ -8,7 +8,6 @@
     moreutils
     nixFlakes
     ripgrep
-    lyctl
     wget
     efm-langserver
     nodePackages_latest.vscode-langservers-extracted
@@ -26,9 +25,8 @@
     jujutsu
     meld
     devenv
-    git-lfs
     python3
-    bundix
+    kitty
   ];
 
   home.file.".config/nushell/env.nu".text = ''
