@@ -26,7 +26,6 @@
     meld
     devenv
     python3
-    kitty
   ];
 
   home.file.".config/nushell/env.nu".text = ''
