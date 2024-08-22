@@ -175,6 +175,7 @@
 
   programs.zellij = {
     enable = true;
+    enableZshIntegration = true;
     settings = {
       default_shell = "${pkgs.nushell}/bin/nu";
     };
@@ -186,14 +187,10 @@
         pane size=1 borderless=true {
           plugin location="zellij:tab-bar"
         }
-        pane split_direction="vertical" {
-          pane split_direction="horizontal" {
-            pane {
-            }
-          }
-          pane split_direction="horizontal" {
-            pane {
-            }
+        pane split_diretion="vertical" {
+          pane {
+          } 
+          pane {
           }
         }
         pane size=2 borderless=true {
