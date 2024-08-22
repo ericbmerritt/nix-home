@@ -1,33 +1,34 @@
 {pkgs, ...}: {
   imports = [./services/ngrok.nix];
 
-  home.packages = [
-    pkgs.awscli2
-    pkgs.tmux
-    pkgs.jq
-    pkgs.moreutils
-    pkgs.nixFlakes
-    pkgs.ripgrep
-    pkgs.flyctl
-    pkgs.wget
-    pkgs.efm-langserver
-    pkgs.nodePackages_latest.vscode-langservers-extracted
-    pkgs.nodePackages_latest.yaml-language-server
-    pkgs.nodePackages_latest.typescript-language-server
-    pkgs.taplo
-    pkgs.nodePackages_latest.prettier
-    pkgs.lazygit
-    pkgs.cachix
-    pkgs.nushell
-    pkgs.nil
-    pkgs.mosh
-    pkgs.oxlint
-    pkgs.alejandra
-    pkgs.jujutsu
-    pkgs.meld
-    pkgs.devenv
-    pkgs.git-lfs
-    pkgs.python3
+  home.packages = with pkgs; [
+    awscli2
+    tmux
+    jq
+    moreutils
+    nixFlakes
+    ripgrep
+    lyctl
+    wget
+    efm-langserver
+    nodePackages_latest.vscode-langservers-extracted
+    nodePackages_latest.yaml-language-server
+    nodePackages_latest.typescript-language-server
+    taplo
+    nodePackages_latest.prettier
+    lazygit
+    cachix
+    nushell
+    nil
+    mosh
+    oxlint
+    alejandra
+    jujutsu
+    meld
+    devenv
+    git-lfs
+    python3
+    bundix
   ];
 
   home.file.".config/nushell/env.nu".text = ''
