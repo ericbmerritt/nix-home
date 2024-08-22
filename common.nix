@@ -126,6 +126,17 @@
 
   programs.command-not-found.enable = true;
 
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+    plugins = with pkgs.vimPlugins; [
+      LazyVim
+    ];
+  };
+
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
