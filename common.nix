@@ -26,6 +26,8 @@
     meld
     devenv
     python3
+    fzf
+    lua
   ];
 
   home.file.".config/nushell/env.nu".text = ''
@@ -187,7 +189,7 @@
         pane size=1 borderless=true {
           plugin location="zellij:tab-bar"
         }
-        pane split_diretion="vertical" {
+        pane split_direction="vertical" {
           pane {
           } 
           pane {
