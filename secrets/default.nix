@@ -6,15 +6,6 @@ let
   decryptedFile = "${secretsDir}/environment-file.sh";
 in
 {
-    
-  # Decrypt the file during activation
-  home.activation.decryptSecret = pkgs.lib.mkAfter ''
-
-    # Create the .secrets directory if it doesn't exist
-    mkdir -p ${secretsDir}
-
-  '';
-
   # Source the decrypted file into session variables
   home.sessionVariablesExtra = ''
     source ${decryptedFile}

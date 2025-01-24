@@ -1,11 +1,15 @@
-{pkgs, ...}: 
-{
-  imports = [./services/ngrok.nix
-             ./secrets/default.nix
-            ./helix/default.nix ];
+{pkgs, ...}: let
+  git-branchless = import ./git-branchless/default.nix {inherit pkgs;};
+  git-absorb = import ./git-absorb/default.nix {inherit pkgs;};
+in {
+  imports = [
+    ./services/ngrok.nix
+    ./secrets/default.nix
+    ./helix/default.nix
+    ./emacs/default.nix
+  ];
 
   home.packages = with pkgs; [
-    awscli2
     tmux
     jq
     moreutils
@@ -15,24 +19,22 @@
     nodePackages_latest.vscode-langservers-extracted
     nodePackages_latest.yaml-language-server
     nodePackages_latest.typescript-language-server
-    taplo
     nodePackages_latest.prettier
-    lazygit
     cachix
     nushell
-    nil
-    oxlint
     alejandra
-    jujutsu
     devenv
+    direnv
     python3
     fzf
-    lua
-    inetutils
     tree
     fd
+    meld
+    jujutsu
+    git-branchless
+    git-absorb
   ];
-                
+
   home.file.".config/nushell/env.nu".text = ''
       mkdir ~/.cache/carapace
       carapace _carapace nushell | save --force ~/.cache/carapace/init.nu
@@ -175,33 +177,6 @@
       config.enable_tab_bar = false
 
       return config
-    '';
-  };
-
-  programs.zellij = {
-    enable = true;
-    enableZshIntegration = true;
-    settings = {
-      default_shell = "${pkgs.nushell}/bin/nu";
-    };
-  };
-  xdg.configFile."zellij/layouts/default.kdl" = {
-    enable = true;
-    text = ''
-      layout {
-        pane size=1 borderless=true {
-          plugin location="zellij:tab-bar"
-        }
-        pane split_direction="vertical" {
-          pane {
-          } 
-          pane {
-          }
-        }
-        pane size=2 borderless=true {
-          plugin location="zellij:status-bar"
-        }
-      }
     '';
   };
 }

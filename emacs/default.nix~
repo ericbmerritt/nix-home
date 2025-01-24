@@ -1,0 +1,122 @@
+{pkgs, ...}: let
+  flymake-vale = pkgs.stdenv.mkDerivation {
+    name = "flymake-vale";
+    src = pkgs.fetchFromGitHub {
+      owner = "tpeacock19";
+      repo = "flymake-vale";
+      rev = "28d4a67";
+      sha256 = "";
+    };
+
+    installPhase = ''
+      mkdir -p $out/share/emacs/site-lisp
+      cp *.el $out/share/emacs/site-lisp/
+    '';
+  };
+  flymake-vale-setup = ''
+    ;; Add to load path
+    (add-to-list 'load-path "${flymake-vale}/share/emacs/site-lisp")
+
+    (require 'flymake-vale)
+
+    (add-hook 'text-mode-hook #'flymake-vale-load)
+    (add-hook 'latex-mode-hook #'flymake-vale-load)
+    (add-hook 'org-mode-hook #'flymake-vale-load)
+    (add-hook 'markdown-mode-hook #'flymake-vale-load)
+    (add-hook 'message-mode-hook #'flymake-vale-load)
+  '';
+in {
+  programs.emacs = {
+    enable = true;
+    package = pkgs.emacs30;
+    extraPackages = epkgs:
+      with epkgs; [
+        rustic
+        vertico
+        marginalia
+        consult
+        treesit-auto
+        which-key
+        magit
+        nix-mode
+        undo-tree
+        # Completion
+        company
+        orderless
+
+        # Navigation/Search
+        projectile
+        ripgrep
+
+        # Git
+        git-timemachine
+        diff-hl
+
+        # Editing
+        smartparens
+        rainbow-delimiters
+
+        # Themes
+        solarized-theme
+
+        chatgpt-shell
+      ];
+
+    extraConfig = ''
+      ;; Basic settings for Emacs 30
+      (setq inhibit-startup-message t)
+      (setq use-short-answers t)  ; y/n instead of yes/no
+      (setq native-comp-async-report-warnings-errors nil)
+
+      ;; UI improvements
+      (tool-bar-mode -1)
+      (menu-bar-mode -1)
+      (scroll-bar-mode -1)
+      (global-display-line-numbers-mode 1)
+      (column-number-mode 1)
+
+
+      ;; Eglot setup
+      (use-package eglot
+        :ensure nil  ; it's built-in
+        :hook ((python-mode . eglot-ensure)
+               (python-ts-mode . eglot-ensure)
+               (js-mode . eglot-ensure)
+               (typescript-mode . eglot-ensure)
+               (rust-mode . eglot-ensure)))
+
+      ;; Autosave settings
+      (setq auto-save-default t)                  ; Enable autosave
+      (setq auto-save-interval 200)               ; Characters between autosaves
+      (setq auto-save-timeout 30)                 ; Seconds of idle time before autosave
+      (global-auto-revert-mode 1)
+
+      ;; Undo changes
+      (global-undo-tree-mode)
+
+      ;; Completion
+      (setq completion-styles '(orderless basic))
+      (global-company-mode)
+
+      ;; Project management
+      (projectile-mode +1)
+      (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+      ;; Editing
+      (show-paren-mode 1)
+      (electric-pair-mode 1)
+      (global-diff-hl-mode)
+
+      ;; Vertico setup
+      (vertico-mode)
+      (marginalia-mode)
+
+      (load-theme 'solarized-dark t)
+
+      (setq chatgpt-shell-openai-key (getenv "OPENAI_API_KEY"))
+      (setq chatgpt-shell-anthropic-key (getenv "ANTHROPIC_API_KEY"))
+
+      ${flymake-vale-setup}
+    '';
+  };
+}
