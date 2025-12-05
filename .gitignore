@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# Backup files
+*.bck
+.*~undo-tree~
+
+# Devenv
+.devenv*
+devenv.local.nix
+devenv.local.yaml
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
+
+# Secrets (if any sensitive files)
+secrets/
