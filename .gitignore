@@ -16,5 +16,6 @@ devenv.local.yaml
 # pre-commit
 .pre-commit-config.yaml
 
-# Secrets (if any sensitive files)
-secrets/
+# Secrets (if any sensitive files - ignore contents except default.nix)
+secrets/*
+!secrets/default.nix

@@ -29,55 +29,64 @@
     };
   };
 
-  outputs = { self, nix-darwin, home-manager, whitepages-nix, ... }:
-  let
-    configuration = { pkgs, ... }: {
-      nix.package = pkgs.nix;
-      nix.enable = false;
+  outputs = {
+    self,
+    nix-darwin,
+    home-manager,
+    whitepages-nix,
+    ...
+  }: let
+    configuration = {pkgs, ...}: {
       ids.gids.nixbld = 350;
 
-      nix.settings = {
-        experimental-features = "nix-command flakes";
-        trusted-users = [ "root" "emerritt" ];
-        substituters = [
-          "https://cache.nixos.org"
-          "https://devenv.cachix.org"
-        ];
-        trusted-substituters = [
-          "https://cache.nixos.org"
-          "https://devenv.cachix.org"
-        ];
-        trusted-public-keys = [
-          "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-          "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-        ];
+      nix = {
+        package = pkgs.nix;
+        enable = false;
+        settings = {
+          experimental-features = "nix-command flakes";
+          trusted-users = ["root" "emerritt"];
+          substituters = [
+            "https://cache.nixos.org"
+            "https://devenv.cachix.org"
+          ];
+          trusted-substituters = [
+            "https://cache.nixos.org"
+            "https://devenv.cachix.org"
+          ];
+          trusted-public-keys = [
+            "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+            "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+          ];
+        };
+        extraOptions =
+          ''
+            download-buffer-size = 50M
+            auto-optimise-store = true
+          ''
+          + pkgs.lib.optionalString (pkgs.stdenv.hostPlatform.system == "aarch64-darwin") ''
+            extra-platforms = x86_64-darwin aarch64-darwin
+          '';
       };
-
-      nix.extraOptions = ''
-        download-buffer-size = 50M
-        auto-optimise-store = true
-      '' + pkgs.lib.optionalString (pkgs.system == "aarch64-darwin") ''
-        extra-platforms = x86_64-darwin aarch64-darwin
-      '';
 
       programs.zsh.enable = true;
 
       homebrew = {
         enable = true;
-        brews = [ "awscli@2" ];
+        brews = ["awscli@2"];
       };
 
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-      system.stateVersion = 4;
-      system.primaryUser = "emerritt";
+      system = {
+        configurationRevision = self.rev or self.dirtyRev or null;
+        stateVersion = 4;
+        primaryUser = "emerritt";
+      };
 
       nixpkgs.hostPlatform = "aarch64-darwin";
     };
-  in
-  {
+  in {
     darwinConfigurations."wp-K942Q6VXR7" = nix-darwin.lib.darwinSystem {
       modules = [
-        { nixpkgs.config.allowUnfreePredicate = _: true; }
+        {nixpkgs.config.allowUnfreePredicate = _: true;}
         configuration
         home-manager.darwinModules.home-manager
         {
