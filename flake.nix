@@ -15,12 +15,12 @@
     };
 
     pagecraft = {
-      url = "git+ssh://git@github.dev.pages/whitepages-meta/monorepo?dir=tools/pagecraft&ref=push-ylpyytrrynxs";
+      url = "git+ssh://git@github.dev.pages/whitepages-meta/monorepo?dir=tools/pagecraft&ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     whitepages-nix = {
-      url = "git+ssh://git@github.dev.pages/whitepages-meta/monorepo?dir=nix&ref=push-ylpyytrrynxs";
+      url = "git+ssh://git@github.dev.pages/whitepages-meta/monorepo?dir=nix/wp-home-manager&ref=main";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         home-manager.follows = "home-manager";

@@ -149,28 +149,7 @@
       enableZshIntegration = true;
       defaultCommand = "${pkgs.fd}/bin/fd --type f --hidden --follow --exclude .git";
     };
-
-    jujutsu = {
-      enable = true;
-      settings = {
-        user = {
-          name = "Eric B. Merritt";
-          email = "eric@merritt.tech";
-        };
-        aliases = {
-          n = ["edit" "@+"];
-          p = ["edit" "@-"];
-          top = ["edit" "latest(descendants(@) & mutable())"];
-          bottom = ["edit" "roots(ancestors(@) & mutable())"];
-          stack = ["log" "-r" "ancestors(@) & descendants(@) & open()"];
-        };
-        ui = {
-          merge-editor = ["${pkgs.meld}/bin/meld" "$left" "$base" "$right" "-o" "$output"];
-          diff-formatter = ["${pkgs.difftastic}/bin/difft" "--color=always" "$left" "$right"];
-        };
-      };
-    };
-
+    
     ssh = {
       enable = true;
       enableDefaultConfig = false;
