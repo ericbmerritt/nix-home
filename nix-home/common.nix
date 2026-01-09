@@ -4,9 +4,14 @@
   ...
 }: {
   imports = [
-    ./secrets/default.nix
     ./helix/default.nix
     ./zellij/default.nix
+  ];
+
+  home.sessionPath = [
+    "${config.home.homeDirectory}/go/bin"
+    "${config.home.homeDirectory}/.local/bin"
+    "${config.home.homeDirectory}/.cargo/bin"
   ];
 
   home.packages = with pkgs; [
@@ -15,10 +20,10 @@
     ripgrep
     wget
     efm-langserver
-    nodePackages_latest.vscode-langservers-extracted
-    nodePackages_latest.yaml-language-server
-    nodePackages_latest.typescript-language-server
-    nodePackages_latest.prettier
+    nodePackages.vscode-langservers-extracted
+    nodePackages.yaml-language-server
+    nodePackages.typescript-language-server
+    nodePackages.prettier
     cachix
     alejandra
     devenv
@@ -112,7 +117,16 @@
       sessionVariables = {
         EDITOR = "${pkgs.helix}/bin/hx";
         ZSH_DISABLE_COMPFIX = "true";
-        PATH = "$PATH:${config.home.homeDirectory}/go/bin:${config.home.homeDirectory}/.local/bin:${config.home.homeDirectory}/.cargo/bin";
+      };
+    };
+
+    jujutsu = {
+      enable = true;
+      settings = {
+        user = {
+          name = "Eric Merritt";
+          email = "eric@merritt.tech";
+        };
       };
     };
 
@@ -149,7 +163,9 @@
       enableZshIntegration = true;
       defaultCommand = "${pkgs.fd}/bin/fd --type f --hidden --follow --exclude .git";
     };
-    
+
+    gsd.enable = true;
+
     ssh = {
       enable = true;
       enableDefaultConfig = false;

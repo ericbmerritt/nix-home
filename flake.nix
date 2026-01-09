@@ -42,30 +42,6 @@
       nix = {
         package = pkgs.nix;
         enable = false;
-        settings = {
-          experimental-features = "nix-command flakes";
-          trusted-users = ["root" "emerritt"];
-          substituters = [
-            "https://cache.nixos.org"
-            "https://devenv.cachix.org"
-          ];
-          trusted-substituters = [
-            "https://cache.nixos.org"
-            "https://devenv.cachix.org"
-          ];
-          trusted-public-keys = [
-            "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-            "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-          ];
-        };
-        extraOptions =
-          ''
-            download-buffer-size = 50M
-            auto-optimise-store = true
-          ''
-          + pkgs.lib.optionalString (pkgs.stdenv.hostPlatform.system == "aarch64-darwin") ''
-            extra-platforms = x86_64-darwin aarch64-darwin
-          '';
       };
 
       programs.zsh.enable = true;
@@ -73,6 +49,7 @@
       homebrew = {
         enable = true;
         brews = ["awscli@2"];
+        casks = ["nikitabobko/tap/aerospace"];
       };
 
       system = {
@@ -83,10 +60,16 @@
 
       nixpkgs.hostPlatform = "aarch64-darwin";
     };
+    overlays.default = final: prev: {
+      gsd = final.callPackage ./nix-home/get-shit-done {};
+    };
   in {
     darwinConfigurations."wp-K942Q6VXR7" = nix-darwin.lib.darwinSystem {
       modules = [
-        {nixpkgs.config.allowUnfreePredicate = _: true;}
+        {
+          nixpkgs.config.allowUnfreePredicate = _: true;
+          nixpkgs.overlays = [overlays.default];
+        }
         configuration
         home-manager.darwinModules.home-manager
         {
@@ -97,6 +80,7 @@
             users.emerritt = {
               imports = [
                 ./nix-home/common.nix
+                ./nix-home/get-shit-done/module.nix
                 whitepages-nix.homeManagerModules.work
               ];
               whitepages.workProfile.enable = true;

@@ -186,7 +186,7 @@
           file-types = ["ts" "mts" "cts"];
           shebangs = [];
           roots = [];
-          language-servers = ["typescript" "gpt"];
+          language-servers = ["typescript"];
           indent = {
             tab-width = 2;
             unit = "  ";
@@ -200,7 +200,7 @@
         {
           name = "rust";
           auto-format = true;
-          language-servers = ["rust" "gpt"];
+          language-servers = ["rust"];
         }
       ];
     };
