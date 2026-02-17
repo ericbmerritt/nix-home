@@ -1,29 +1,41 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
   imports = [
     ./helix/default.nix
+    ./wezterm/default.nix
     ./zellij/default.nix
   ];
+
+  # whitepages-nix's work module points netrc-file at ~/.config/nix/netrc, but
+  # Determinate Nix owns netrc and refuses to authenticate while the option
+  # names any other path (`determinate-nixd status` errors, FlakeHub logs out).
+  # The dev-cache credentials get merged into Determinate's file instead, via
+  # authentication.additionalNetrcSources in /etc/determinate/config.json.
+  nix.settings.netrc-file = lib.mkForce "/nix/var/determinate/netrc";
 
   home.sessionPath = [
     "${config.home.homeDirectory}/go/bin"
     "${config.home.homeDirectory}/.local/bin"
     "${config.home.homeDirectory}/.cargo/bin"
+    "/opt/homebrew/bin"
+    "/opt/homebrew/sbin"
   ];
 
   home.packages = with pkgs; [
+    awscli2
     jq
     moreutils
     ripgrep
     wget
     efm-langserver
-    nodePackages.vscode-langservers-extracted
-    nodePackages.yaml-language-server
-    nodePackages.typescript-language-server
-    nodePackages.prettier
+    vscode-langservers-extracted
+    yaml-language-server
+    typescript-language-server
+    prettier
     cachix
     alejandra
     devenv
@@ -38,13 +50,14 @@
     codex
     jjui
     difftastic
+    pi-coding-agent
   ];
 
   programs = {
     starship = {
       enable = true;
       settings = {
-        format = "$directory\${custom.jj}$git_branch$git_status$python$nodejs$rust$nix_shell$cmd_duration$line_break$character";
+        format = "$directory$git_branch$git_status$python$nodejs$rust$nix_shell$cmd_duration$line_break$character";
 
         character = {
           success_symbol = "[❯](bold green) ";
@@ -56,13 +69,6 @@
           truncation_length = 3;
           truncate_to_repo = true;
           format = "[ $path]($style)[$read_only]($read_only_style) ";
-        };
-
-        custom.jj = {
-          command = "jj log -r @ -n1 --ignore-working-copy --no-graph --color always -T 'separate(\" \", change_id.shortest(8), bookmarks)'";
-          when = "jj root";
-          format = "[on  $output]($style) ";
-          style = "bold purple";
         };
 
         git_branch = {
@@ -125,7 +131,7 @@
       settings = {
         user = {
           name = "Eric Merritt";
-          email = "eric@merritt.tech";
+          email = "emerritt@whitepages.com";
         };
       };
     };
@@ -137,6 +143,8 @@
       viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
+      withRuby = false;
+      withPython3 = false;
       plugins = with pkgs.vimPlugins; [
         LazyVim
       ];
@@ -152,8 +160,8 @@
       enable = true;
       settings = {
         user = {
-          name = "Eric B. Merritt";
-          email = "eric@merritt.tech";
+          name = "Eric Merritt";
+          email = "emerritt@whitepages.com";
         };
       };
     };
@@ -164,10 +172,10 @@
       defaultCommand = "${pkgs.fd}/bin/fd --type f --hidden --follow --exclude .git";
     };
 
-    gsd.enable = true;
-
     ssh = {
       enable = true;
+      # Opt out of home-manager's implicit `*` defaults (deprecated); we set
+      # only what we actually want in matchBlocks."*" below.
       enableDefaultConfig = false;
       includes = [
         "${config.home.homeDirectory}/.colima/ssh_config"

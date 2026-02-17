@@ -1,14 +1,18 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  ...
+}: {
   programs.zellij = {
     enable = true;
   };
+
 
   xdg.configFile."zellij/layouts/two-panes.kdl".text = ''
     layout {
       pane size=1 borderless=true {
         plugin location="zellij:tab-bar"
       }
-      pane split_direction="vertical" {
+      pane split_direction="horizontal" {
         pane
         pane
       }
@@ -269,6 +273,7 @@
 
     plugins {
         about location="zellij:about"
+        attention location="file:${pkgs.zellij-attention}"
         compact-bar location="zellij:compact-bar"
         configuration location="zellij:configuration"
         filepicker location="zellij:strider" {
@@ -285,6 +290,11 @@
     }
 
     load_plugins {
+        "file:${pkgs.zellij-attention}" {
+            enabled "true"
+            waiting_icon "⏳"
+            completed_icon "✅"
+        }
     }
 
     web_client {

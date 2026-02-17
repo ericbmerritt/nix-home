@@ -33,17 +33,17 @@
           };
         };
         json = {
-          command = "${pkgs.nodePackages_latest.vscode-langservers-extracted}/bin/json-languageserver";
+          command = "${pkgs.vscode-langservers-extracted}/bin/json-languageserver";
           args = ["--stdio"];
           config = {"provideFormatter" = true;};
         };
         html = {
-          command = "${pkgs.nodePackages_latest.vscode-langservers-extracted}/bin/html-languageserver";
+          command = "${pkgs.vscode-langservers-extracted}/bin/html-languageserver";
           args = ["--stdio"];
           config = {"provideFormatter" = true;};
         };
         typescript = {
-          command = "${pkgs.nodePackages_latest.typescript-language-server}/bin/typescript-language-server";
+          command = "${pkgs.typescript-language-server}/bin/typescript-language-server";
           args = ["--stdio"];
           language-id = "typescript";
         };
@@ -193,7 +193,7 @@
           };
           auto-format = true;
           formatter = {
-            command = "${pkgs.nodePackages_latest.prettier}/bin/prettier";
+            command = "${pkgs.prettier}/bin/prettier";
             args = ["--stdin-filepath" "tmp.ts" "--"];
           };
         }

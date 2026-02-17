@@ -2,17 +2,9 @@
   description = "emerritt's nix-darwin configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs.follows = "whitepages-nix/nixpkgs";
+    nix-darwin.follows = "whitepages-nix/nix-darwin";
+    home-manager.follows = "whitepages-nix/home-manager";
 
     pagecraft = {
       url = "git+ssh://git@github.dev.pages/whitepages-meta/monorepo?dir=tools/pagecraft&ref=main";
@@ -21,12 +13,9 @@
 
     whitepages-nix = {
       url = "git+ssh://git@github.dev.pages/whitepages-meta/monorepo?dir=nix/wp-home-manager&ref=main";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-        pagecraft.follows = "pagecraft";
-      };
+      inputs.pagecraft.follows = "pagecraft";
     };
+
   };
 
   outputs = {
@@ -48,7 +37,7 @@
 
       homebrew = {
         enable = true;
-        brews = ["awscli@2"];
+        brews = [];
         casks = ["nikitabobko/tap/aerospace"];
       };
 
@@ -61,7 +50,11 @@
       nixpkgs.hostPlatform = "aarch64-darwin";
     };
     overlays.default = final: prev: {
-      gsd = final.callPackage ./nix-home/get-shit-done {};
+      direnv = prev.direnv.overrideAttrs (old: { doCheck = false; });
+      zellij-attention = final.fetchurl {
+        url = "https://github.com/KiryuuLight/zellij-attention/releases/download/v0.3.0/zellij-attention.wasm";
+        sha256 = "1a6b6cy8fsghc28lmyjwwp5l20xvfyhyi1awlmb11fn1ls573b89";
+      };
     };
   in {
     darwinConfigurations."wp-K942Q6VXR7" = nix-darwin.lib.darwinSystem {
@@ -80,7 +73,6 @@
             users.emerritt = {
               imports = [
                 ./nix-home/common.nix
-                ./nix-home/get-shit-done/module.nix
                 whitepages-nix.homeManagerModules.work
               ];
               whitepages.workProfile.enable = true;
@@ -95,5 +87,12 @@
     };
 
     darwinPackages = self.darwinConfigurations."wp-K942Q6VXR7".pkgs;
+
+    devShells.aarch64-darwin.default = let
+      pkgs = import self.inputs.nixpkgs {system = "aarch64-darwin";};
+    in
+      pkgs.mkShell {
+        packages = with pkgs; [git alejandra statix just];
+      };
   };
 }
