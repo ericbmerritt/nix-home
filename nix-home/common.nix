@@ -50,7 +50,7 @@
     codex
     jjui
     difftastic
-    pi-coding-agent
+    cmux
   ];
 
   programs = {
@@ -124,6 +124,11 @@
         EDITOR = "${pkgs.helix}/bin/hx";
         ZSH_DISABLE_COMPFIX = "true";
       };
+      initExtra = ''
+        wrn() {
+          printf '\033]0;%s\007' "''${1:-$(basename "$PWD")}"
+        }
+      '';
     };
 
     jujutsu = {
