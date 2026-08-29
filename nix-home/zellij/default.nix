@@ -1,11 +1,7 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   programs.zellij = {
     enable = true;
   };
-
 
   xdg.configFile."zellij/layouts/two-panes.kdl".text = ''
     layout {

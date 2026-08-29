@@ -17,7 +17,6 @@
       url = "git+file:///Users/emerritt/workspace/monorepo-stacks/stacks/pi-dev-flake?dir=nix/wp-home-manager";
       inputs.pagecraft.follows = "pagecraft";
     };
-
   };
 
   outputs = {
@@ -52,8 +51,8 @@
       nixpkgs.hostPlatform = "aarch64-darwin";
     };
     overlays.default = final: prev: {
-      direnv = prev.direnv.overrideAttrs (old: { doCheck = false; });
-      cmux = final.callPackage ./nix-home/cmux/package.nix { };
+      direnv = prev.direnv.overrideAttrs (old: {doCheck = false;});
+      cmux = final.callPackage ./nix-home/cmux/package.nix {};
       zellij-attention = final.fetchurl {
         url = "https://github.com/KiryuuLight/zellij-attention/releases/download/v0.3.0/zellij-attention.wasm";
         sha256 = "1a6b6cy8fsghc28lmyjwwp5l20xvfyhyi1awlmb11fn1ls573b89";

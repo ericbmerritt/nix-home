@@ -2,7 +2,8 @@
   lib,
   stdenvNoCC,
   fetchurl,
-  _7zz,}:
+  _7zz,
+}:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "cmux";
   version = "0.64.22";
