@@ -124,7 +124,7 @@
         EDITOR = "${pkgs.helix}/bin/hx";
         ZSH_DISABLE_COMPFIX = "true";
       };
-      initExtra = ''
+      initContent = ''
         wrn() {
           printf '\033]0;%s\007' "''${1:-$(basename "$PWD")}"
         }
@@ -180,26 +180,37 @@
     ssh = {
       enable = true;
       # Opt out of home-manager's implicit `*` defaults (deprecated); we set
-      # only what we actually want in matchBlocks."*" below.
+      # only what we actually want in settings."*" below.
       enableDefaultConfig = false;
       includes = [
         "${config.home.homeDirectory}/.colima/ssh_config"
       ];
-      matchBlocks = {
+      # `settings` replaces the deprecated `matchBlocks` and is freeform over
+      # upstream ssh_config(5) directive names, not home-manager's camelCase
+      # aliases: AddKeysToAgent, not addKeysToAgent.
+      settings = {
         "*" = {
-          addKeysToAgent = "yes";
+          AddKeysToAgent = "yes";
         };
         "github.com" = {
-          identityFile = "~/.ssh/id_ed25519";
+          IdentityFile = "~/.ssh/id_ed25519";
         };
         "github.dev.pages" = {
-          identityFile = "~/.ssh/id_ed25519";
+          IdentityFile = "~/.ssh/id_ed25519";
         };
         "lascasas" = {
-          hostname = "lascasas";
-          user = "eric";
+          HostName = "lascasas";
+          User = "eric";
         };
       };
     };
   };
+
+  # cmux is installed from the read-only Nix store; Sparkle's updater
+  # can't write there (and its host-bundle lookup fails when launched via
+  # the bin/ symlink), so disable its update checks.
+  home.activation.disableCmuxSparkle = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    run /usr/bin/defaults write com.cmuxterm.app SUEnableAutomaticChecks -bool false
+    run /usr/bin/defaults write com.cmuxterm.app SUAutomaticallyUpdate -bool false
+  '';
 }

@@ -73,6 +73,10 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
+            # Unmanaged files that land where a home-manager symlink belongs
+            # (hand-installed agent skills, editor state) otherwise abort the
+            # whole activation. Move them aside instead of failing the switch.
+            backupFileExtension = "hm-bak";
             users.emerritt = {
               imports = [
                 ./nix-home/common.nix

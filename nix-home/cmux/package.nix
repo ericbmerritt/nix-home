@@ -43,12 +43,28 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     # Strip the stray xattr-materialized files 7zz left behind.
     find $out/Applications/cmux.app -name '*:com.apple.cs.*' -delete
 
-    # Re-sign only the outer bundle so it matches the (still-valid) nested
-    # code and the script shebangs fixup rewrote. Entitlements and requirements
-    # are carried over from the original signature.
+    # Re-sign the outer bundle. Restricted entitlements (application-
+    # identifier, team-identifier, keychain-access-groups, ...) are only valid
+    # with a real Apple-issued certificate; keeping them under an ad-hoc
+    # signature makes amfid kill the process with SIGKILL (-424). Keep only
+    # the unrestricted ones.
     # NOTE: no --deep -- it mangles Sparkle's nested helpers.
+    cat > entitlements.plist <<'EOF'
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+      <key>com.apple.security.cs.allow-jit</key><true/>
+      <key>com.apple.security.cs.allow-unsigned-executable-memory</key><true/>
+      <key>com.apple.security.cs.disable-library-validation</key><true/>
+      <key>com.apple.security.automation.apple-events</key><true/>
+      <key>com.apple.security.device.audio-input</key><true/>
+      <key>com.apple.security.device.camera</key><true/>
+    </dict>
+    </plist>
+    EOF
     /usr/bin/codesign --force --sign - \
-      --preserve-metadata=entitlements,requirements,flags \
+      --entitlements entitlements.plist \
       $out/Applications/cmux.app
   '';
 
