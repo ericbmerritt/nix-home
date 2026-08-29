@@ -13,6 +13,9 @@ devenv.local.yaml
 # direnv
 .direnv
 
+# surface (local index/watch state)
+.surface/
+
 # pre-commit
 .pre-commit-config.yaml
 
