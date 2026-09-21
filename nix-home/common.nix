@@ -50,7 +50,7 @@
     codex
     jjui
     difftastic
-    cmux
+    herdr
   ];
 
   programs = {

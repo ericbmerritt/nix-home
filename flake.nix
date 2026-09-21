@@ -7,14 +7,16 @@
     home-manager.follows = "whitepages-nix/home-manager";
 
     pagecraft = {
-      url = "git+ssh://git@github.dev.pages/whitepages-meta/monorepo?dir=tools/pagecraft&ref=main";
+      # Temporarily track the local stack-herdr work; restore the git+ssh
+      # main URL once this stack merges.
+      url = "git+file:///Users/emerritt/workspace/monorepo-stacks/stacks/stack-herdr?dir=tools/pagecraft";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     whitepages-nix = {
-      # Temporarily pointed at the local pi-dev-flake stack for testing;
-      # restore the git+ssh main URL before keeping long-term.
-      url = "git+file:///Users/emerritt/workspace/monorepo-stacks/stacks/pi-dev-flake?dir=nix/wp-home-manager";
+      # Temporarily track the local stack-herdr work; restore the git+ssh
+      # main URL once this stack merges.
+      url = "git+file:///Users/emerritt/workspace/monorepo-stacks/stacks/stack-herdr?dir=nix/wp-home-manager";
       inputs.pagecraft.follows = "pagecraft";
     };
   };
@@ -52,7 +54,6 @@
     };
     overlays.default = final: prev: {
       direnv = prev.direnv.overrideAttrs (old: {doCheck = false;});
-      cmux = final.callPackage ./nix-home/cmux/package.nix {};
       zellij-attention = final.fetchurl {
         url = "https://github.com/KiryuuLight/zellij-attention/releases/download/v0.3.0/zellij-attention.wasm";
         sha256 = "1a6b6cy8fsghc28lmyjwwp5l20xvfyhyi1awlmb11fn1ls573b89";
