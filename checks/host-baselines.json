@@ -1,0 +1,15 @@
+{
+  "capturedAt": "2026-10-22",
+  "workLaptop": {
+    "runningSystem": "/nix/store/dqm0j00d0617wffb41iy78wkxdfy91pc-darwin-system-26.11.f0ec2b3",
+    "runningProfile": "system-207-link",
+    "originalCheckoutDerivation": "/nix/store/62h71zggxk1af2kw8hgc84hkfzpx8y5g-darwin-system-26.11.f0ec2b3.drv",
+    "publishedSourceCheckoutDerivation": "/nix/store/isrrpmq3p85cagnzdxp5171z9gyk1axj-darwin-system-26.11.f0ec2b3.drv",
+    "evaluatedSettingsFixture": "checks/work-laptop-baseline.json",
+    "originalDirtyLockSha256": "513ab80e2bb058b3beb3ef8983c8bbcd566506f1cde953315a51bf4a7aee4f67"
+  },
+  "lascasas": {
+    "runningSystem": "/nix/store/1mj88yawfw4a2dyhbxfxgx814y58ixzg-nixos-system-lascasas-26.05.12297.cd4ea8d57de1",
+    "nixpkgsRevision": "cd4ea8d57de16f4810bc5f14207bac45fbf19f67"
+  }
+}

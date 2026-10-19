@@ -17,41 +17,51 @@
   # authentication.additionalNetrcSources in /etc/determinate/config.json.
   nix.settings.netrc-file = lib.mkForce "/nix/var/determinate/netrc";
 
-  home.sessionPath = [
-    "${config.home.homeDirectory}/go/bin"
-    "${config.home.homeDirectory}/.local/bin"
-    "${config.home.homeDirectory}/.cargo/bin"
-    "/opt/homebrew/bin"
-    "/opt/homebrew/sbin"
-  ];
+  home = {
+    sessionPath = [
+      "${config.home.homeDirectory}/go/bin"
+      "${config.home.homeDirectory}/.local/bin"
+      "${config.home.homeDirectory}/.cargo/bin"
+      "/opt/homebrew/bin"
+      "/opt/homebrew/sbin"
+    ];
 
-  home.packages = with pkgs; [
-    awscli2
-    jq
-    moreutils
-    ripgrep
-    wget
-    efm-langserver
-    vscode-langservers-extracted
-    yaml-language-server
-    typescript-language-server
-    prettier
-    cachix
-    alejandra
-    devenv
-    python3
-    tree
-    fd
-    meld
-    kubectl
-    kubernetes-helm
-    podman
-    lazyjj
-    codex
-    jjui
-    difftastic
-    herdr
-  ];
+    packages = with pkgs; [
+      awscli2
+      jq
+      moreutils
+      ripgrep
+      wget
+      efm-langserver
+      vscode-langservers-extracted
+      yaml-language-server
+      typescript-language-server
+      prettier
+      cachix
+      alejandra
+      devenv
+      python3
+      tree
+      fd
+      meld
+      kubectl
+      kubernetes-helm
+      podman
+      lazyjj
+      codex
+      jjui
+      difftastic
+      herdr
+    ];
+
+    # cmux is installed from the read-only Nix store; Sparkle's updater
+    # can't write there (and its host-bundle lookup fails when launched via
+    # the bin/ symlink), so disable its update checks.
+    activation.disableCmuxSparkle = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      run /usr/bin/defaults write com.cmuxterm.app SUEnableAutomaticChecks -bool false
+      run /usr/bin/defaults write com.cmuxterm.app SUAutomaticallyUpdate -bool false
+    '';
+  };
 
   programs = {
     starship = {
@@ -205,12 +215,4 @@
       };
     };
   };
-
-  # cmux is installed from the read-only Nix store; Sparkle's updater
-  # can't write there (and its host-bundle lookup fails when launched via
-  # the bin/ symlink), so disable its update checks.
-  home.activation.disableCmuxSparkle = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    run /usr/bin/defaults write com.cmuxterm.app SUEnableAutomaticChecks -bool false
-    run /usr/bin/defaults write com.cmuxterm.app SUAutomaticallyUpdate -bool false
-  '';
 }

@@ -1,0 +1,446 @@
+{
+  "host": {
+    "homeDirectory": "/Users/emerritt",
+    "nixEnabled": false,
+    "platform": "aarch64-darwin",
+    "primaryUser": "emerritt",
+    "stateVersion": 4
+  },
+  "pins": {
+    "homeManager": "5bf02bcfede52ca95f693069ac28ace376942c05",
+    "nixDarwin": "f0ec2b3fae4df92ea7788359aef9e07bb88d720f",
+    "nixpkgs": "7a6522c868711d06e3a520bbcdfafe9806f4337f",
+    "unstable": "7a6522c868711d06e3a520bbcdfafe9806f4337f"
+  },
+  "systemPackages": [
+    "bash-interactive-5.3p20",
+    "darwin-help",
+    "darwin-manpages",
+    "darwin-manual-html",
+    "darwin-option",
+    "darwin-rebuild",
+    "darwin-uninstaller",
+    "darwin-version",
+    "nix-zsh-completions-0.5.1-unstable-2025-12-12",
+    "texinfo-interactive-7.3",
+    "zsh-5.9.2"
+  ],
+  "user": {
+    "activationJobs": [
+      "accountStateFactoryMcpRegistration",
+      "awsConfigReset",
+      "bootoutStrandedGuiAgents",
+      "cachixAuth",
+      "cachixPush",
+      "checkAppManagementPermission",
+      "checkFilesChanged",
+      "checkLinkTargets",
+      "claudeSettings",
+      "copyApps",
+      "determinateNetrc",
+      "disableCmuxSparkle",
+      "herdrIntegrations",
+      "installPackages",
+      "linkGeneration",
+      "nixTrustedUser",
+      "nxCacheHint",
+      "onFilesChange",
+      "setupLaunchAgents",
+      "stagehandMcpRegistration",
+      "writeBoundary"
+    ],
+    "git": {
+      "user": {
+        "email": "emerritt@whitepages.com",
+        "name": "Eric Merritt"
+      }
+    },
+    "helix": {
+      "editor": {
+        "auto-save": true,
+        "cursor-shape": {
+          "insert": "bar",
+          "normal": "block",
+          "select": "underline"
+        },
+        "file-picker": {
+          "hidden": false
+        },
+        "line-number": "relative",
+        "lsp": {
+          "display-inlay-hints": true
+        },
+        "mouse": true,
+        "rulers": [
+          80,
+          120
+        ],
+        "statusline": {
+          "center": [
+            "file-name"
+          ],
+          "left": [
+            "mode",
+            "spinner"
+          ],
+          "right": [
+            "diagnostics",
+            "selections",
+            "position",
+            "file-encoding",
+            "file-line-ending",
+            "file-type"
+          ],
+          "separator": "\u2502"
+        },
+        "whitespace": {
+          "render": {
+            "newline": "all"
+          }
+        }
+      },
+      "keys": {
+        "insert": {
+          "esc": [
+            "normal_mode",
+            ":w"
+          ]
+        }
+      },
+      "theme": "penumbra+"
+    },
+    "jujutsu": {
+      "aliases": {
+        "bottom": [
+          "edit",
+          "roots(ancestors(@) & mutable())"
+        ],
+        "n": [
+          "edit",
+          "@+"
+        ],
+        "p": [
+          "edit",
+          "@-"
+        ],
+        "stack": [
+          "log",
+          "-r",
+          "ancestors(@) & descendants(@) & open()"
+        ],
+        "top": [
+          "edit",
+          "latest(descendants(@) & mutable())"
+        ]
+      },
+      "revsets": {
+        "log": "present(@) | ancestors((immutable_heads().. & mine()), 2) | present(trunk())"
+      },
+      "ui": {
+        "diff-formatter": [
+          "/nix/store/53n302328nz55w7nb45xwq4g1z68v7a8-difftastic-0.71.0/bin/difft",
+          "--color=always",
+          "$left",
+          "$right"
+        ],
+        "merge-editor": [
+          "/nix/store/8pk6vvb8b5417lnfcmwq2mwlzb64hzyi-meld-3.24.1/bin/meld",
+          "$left",
+          "$base",
+          "$right",
+          "-o",
+          "$output"
+        ]
+      },
+      "user": {
+        "email": "emerritt@whitepages.com",
+        "name": "Eric Merritt"
+      }
+    },
+    "managedFiles": [
+      "./.zprofile",
+      "./.zshenv",
+      "./.zshrc",
+      ".claude/AGENTS.md",
+      ".claude/CLAUDE.md",
+      ".claude/agents/bug-fix.md",
+      ".claude/agents/code.md",
+      ".claude/agents/dba.md",
+      ".claude/agents/dry-eye.md",
+      ".claude/agents/editor.md",
+      ".claude/agents/execute.md",
+      ".claude/agents/executor.md",
+      ".claude/agents/greybeard.md",
+      ".claude/agents/logs.md",
+      ".claude/agents/meta.md",
+      ".claude/agents/perf.md",
+      ".claude/agents/postgres.md",
+      ".claude/agents/prof.md",
+      ".claude/agents/redteam.md",
+      ".claude/agents/spec.md",
+      ".claude/agents/specwright.md",
+      ".claude/agents/tui.md",
+      ".claude/agents/webcraft.md",
+      ".claude/agents/what-if.md",
+      ".claude/commands/ci-babysit.md",
+      ".claude/commands/commit.md",
+      ".claude/commands/fix-ci.md",
+      ".claude/commands/panel-pr.md",
+      ".claude/commands/panel-review.md",
+      ".claude/commands/pr.md",
+      ".claude/commands/review-respond.md",
+      ".claude/commands/review.md",
+      ".claude/commands/self-review.md",
+      ".claude/commands/spec-explainer.md",
+      ".claude/commands/start-session.md",
+      ".claude/skills/adversarial-spec-review",
+      ".claude/skills/agent-policies",
+      ".claude/skills/agent-wingman",
+      ".claude/skills/architectural-evaluation",
+      ".claude/skills/coding-standards",
+      ".claude/skills/commit-workflow",
+      ".claude/skills/docs-writing",
+      ".claude/skills/gh-pr-patterns",
+      ".claude/skills/inbox",
+      ".claude/skills/jenkins-patterns",
+      ".claude/skills/jira-cli-patterns",
+      ".claude/skills/nightly-flaker-triage",
+      ".claude/skills/pgc-logs",
+      ".claude/skills/postmortem-writing",
+      ".claude/skills/pr-workflow",
+      ".claude/skills/review-guidelines",
+      ".claude/skills/review-pass-0-code-reuse",
+      ".claude/skills/review-pass-1-architecture",
+      ".claude/skills/review-pass-10-cross-pr",
+      ".claude/skills/review-pass-11-historical-intel",
+      ".claude/skills/review-pass-2-security",
+      ".claude/skills/review-pass-3-type-safety",
+      ".claude/skills/review-pass-4-testing-readiness",
+      ".claude/skills/review-pass-5-ai-slop",
+      ".claude/skills/review-pass-6-nits",
+      ".claude/skills/review-pass-7-file-size",
+      ".claude/skills/review-pass-8-comments",
+      ".claude/skills/review-pass-9-correctness",
+      ".claude/skills/spec-concision",
+      ".claude/skills/spec-explainer",
+      ".claude/skills/spec-workflow",
+      ".claude/skills/start-local-services",
+      ".claude/skills/team-execution",
+      ".claude/skills/test-plan",
+      ".claude/skills/test-writing",
+      ".claude/skills/ui-verify",
+      ".claude/skills/validation-standards",
+      ".claude/skills/worktree-workflow",
+      ".claude/skills/writing-voice",
+      ".pi/agent/AGENTS.md",
+      ".pi/agent/extensions/codex-fast",
+      ".pi/agent/extensions/jjig",
+      ".pi/agent/extensions/ohmyopenrouter",
+      ".pi/agent/extensions/stack-context",
+      ".pi/agent/extensions/stack-pi-model.ts",
+      ".pi/agent/extensions/when",
+      ".pi/agent/extensions/wp-fleet",
+      ".pi/agent/prompts/bug-fix.md",
+      ".pi/agent/prompts/ci-babysit.md",
+      ".pi/agent/prompts/code.md",
+      ".pi/agent/prompts/commit.md",
+      ".pi/agent/prompts/editor.md",
+      ".pi/agent/prompts/evaluation-gate.md",
+      ".pi/agent/prompts/execute.md",
+      ".pi/agent/prompts/executor.md",
+      ".pi/agent/prompts/fix-ci.md",
+      ".pi/agent/prompts/logs.md",
+      ".pi/agent/prompts/meta.md",
+      ".pi/agent/prompts/postgres.md",
+      ".pi/agent/prompts/pr.md",
+      ".pi/agent/prompts/review-panel.md",
+      ".pi/agent/prompts/review-respond.md",
+      ".pi/agent/prompts/review.md",
+      ".pi/agent/prompts/spec.md",
+      ".pi/agent/prompts/specwright.md",
+      ".pi/agent/prompts/start-session.md",
+      ".pi/agent/skills/adversarial-spec-review",
+      ".pi/agent/skills/agent-policies",
+      ".pi/agent/skills/agent-wingman",
+      ".pi/agent/skills/architectural-evaluation",
+      ".pi/agent/skills/coding-standards",
+      ".pi/agent/skills/commit-workflow",
+      ".pi/agent/skills/desk-pipeline",
+      ".pi/agent/skills/docs-writing",
+      ".pi/agent/skills/gh-pr-patterns",
+      ".pi/agent/skills/jenkins-patterns",
+      ".pi/agent/skills/jira-cli-patterns",
+      ".pi/agent/skills/nightly-flaker-triage",
+      ".pi/agent/skills/pgc-logs",
+      ".pi/agent/skills/postmortem-writing",
+      ".pi/agent/skills/pr-workflow",
+      ".pi/agent/skills/review-guidelines",
+      ".pi/agent/skills/review-pass-0-code-reuse",
+      ".pi/agent/skills/review-pass-1-architecture",
+      ".pi/agent/skills/review-pass-10-cross-pr",
+      ".pi/agent/skills/review-pass-11-historical-intel",
+      ".pi/agent/skills/review-pass-2-security",
+      ".pi/agent/skills/review-pass-3-type-safety",
+      ".pi/agent/skills/review-pass-4-testing-readiness",
+      ".pi/agent/skills/review-pass-5-ai-slop",
+      ".pi/agent/skills/review-pass-6-nits",
+      ".pi/agent/skills/review-pass-7-file-size",
+      ".pi/agent/skills/review-pass-8-comments",
+      ".pi/agent/skills/review-pass-9-correctness",
+      ".pi/agent/skills/spec-concision",
+      ".pi/agent/skills/spec-workflow",
+      ".pi/agent/skills/start-local-services",
+      ".pi/agent/skills/test-plan",
+      ".pi/agent/skills/test-writing",
+      ".pi/agent/skills/ui-verify",
+      ".pi/agent/skills/validation-standards",
+      ".pi/agent/skills/worktree-workflow",
+      ".pi/agent/skills/writing-voice",
+      ".pi/when.json",
+      ".ssh/config",
+      "/Users/emerritt/.cache/.keep",
+      "/Users/emerritt/.cache/oh-my-zsh/.keep",
+      "/Users/emerritt/.config/direnv/lib/hm-nix-direnv.sh",
+      "/Users/emerritt/.config/git/config",
+      "/Users/emerritt/.config/helix/config.toml",
+      "/Users/emerritt/.config/helix/languages.toml",
+      "/Users/emerritt/.config/jj/config.toml",
+      "/Users/emerritt/.config/nix/nix.conf",
+      "/Users/emerritt/.config/nvim/init.lua",
+      "/Users/emerritt/.config/starship.toml",
+      "/Users/emerritt/.config/wezterm/wezterm.lua",
+      "/Users/emerritt/.config/wezterm/wp-tabs.lua",
+      "/Users/emerritt/.config/zellij/config.kdl",
+      "/Users/emerritt/.config/zellij/layouts/two-panes.kdl",
+      "/Users/emerritt/.local/share/nvim/site/pack/hm",
+      "/Users/emerritt/.local/state/.keep",
+      "Library/Fonts/.home-manager-fonts-version"
+    ],
+    "packages": [
+      "alejandra-4.0.0",
+      "autojump-22.5.3",
+      "aws-es-kibana-1.0.8",
+      "awscli2-2.36.31",
+      "awscli2-2.36.31",
+      "bat-0.26.1",
+      "bitwarden-cli-2026.9.1",
+      "cachix-1.12.1",
+      "cachix-1.12.1",
+      "chloe-0.4.0",
+      "claude-code-2.1.301",
+      "cmux-0.64.22",
+      "codex-0.163.0",
+      "command-not-found",
+      "databricks-cli-1.20.0",
+      "devenv-2.4.0",
+      "devenv-2.4.0",
+      "difftastic-0.71.0",
+      "difftastic-0.71.0",
+      "direnv-2.38.2",
+      "efm-langserver-0.0.57",
+      "fd-10.5.0",
+      "fd-10.5.0",
+      "fzf-0.74.5",
+      "gh-2.102.0",
+      "ghostty-bin-1.3.1",
+      "git-2.56.0",
+      "git-crypt-0.8.0",
+      "helix-25.07.1",
+      "helm3-3.21.0",
+      "herdr-0.9.5",
+      "herdr-0.9.5",
+      "hm-session-vars.sh",
+      "home-configuration-reference-manpage",
+      "jjpr",
+      "jjui-0.10.11",
+      "jjui-0.10.11",
+      "jq-1.8.2",
+      "jujutsu-0.46.0",
+      "kubectl-1.37.1",
+      "kubectl-1.37.1",
+      "kubernetes-helm-4.3.1",
+      "lazygit-0.66.2",
+      "lazyjj-0.6.1",
+      "lazyjj-0.6.1",
+      "man-db-2.13.1",
+      "meld-3.24.1",
+      "meld-3.24.1",
+      "moreutils-0.70",
+      "neovim-0.12.6",
+      "nix-zsh-completions-0.5.1-unstable-2025-12-12",
+      "oh-my-zsh-2026-08-16",
+      "pagecraft",
+      "pay-respects-0.8.8",
+      "pi-coding-agent-1.3.0",
+      "podman-5.8.9",
+      "podman-5.8.9",
+      "prefect-3.8.6",
+      "prettier-3.9.10",
+      "python3-3.14.8",
+      "ripgrep-15.2.0",
+      "stack-workbench-0.1.0",
+      "stagehand-mcp-4.0.2",
+      "starship-1.26.0",
+      "stats-3.0.17",
+      "stern-1.34.0",
+      "surface-0.1.0",
+      "terraform-1.16.5",
+      "tree-2.3.2",
+      "typescript-language-server-6.0.2",
+      "validate-filter",
+      "vscode-langservers-extracted-1.126.04524",
+      "wezterm-0-unstable-2026-10-10",
+      "wezterm-0-unstable-2026-10-10",
+      "wget-1.25.0",
+      "yaml-language-server-1.25.0",
+      "yq-go-4.54.1",
+      "zellij-0.45.1",
+      "zsh-5.9.2"
+    ],
+    "sessionPath": [
+      "/Users/emerritt/go/bin",
+      "/Users/emerritt/.local/bin",
+      "/Users/emerritt/.cargo/bin",
+      "/opt/homebrew/bin",
+      "/opt/homebrew/sbin"
+    ],
+    "ssh": {
+      "*": {
+        "after": [],
+        "before": [],
+        "data": {
+          "AddKeysToAgent": "yes",
+          "header": "Host *"
+        }
+      },
+      "github.com": {
+        "after": [],
+        "before": [],
+        "data": {
+          "IdentityFile": "~/.ssh/id_ed25519",
+          "header": "Host github.com"
+        }
+      },
+      "github.dev.pages": {
+        "after": [],
+        "before": [],
+        "data": {
+          "IdentityFile": "~/.ssh/id_ed25519",
+          "header": "Host github.dev.pages"
+        }
+      },
+      "lascasas": {
+        "after": [],
+        "before": [],
+        "data": {
+          "HostName": "lascasas",
+          "User": "eric",
+          "header": "Host lascasas"
+        }
+      }
+    },
+    "stateVersion": "23.05",
+    "wezterm": "-- Stacked-tab WezTerm config.\n--\n-- Layout: new tabs spawn pre-split into a 70/30 vertical stack (top pane\n-- active). A second keybinding produces a plain single-pane tab for when\n-- you only want to spawn. The split size is declared once at the top so the\n-- fraction-vs-Percent shape mismatch between pane:split and SplitPane\n-- only exists in one place.\n--\n-- This file is the source of truth. The Home Manager-generated\n-- ~/.config/wezterm/wezterm.lua should `require` it (see note at bottom)\n-- or its body should be folded into the work profile's extraConfig.\n\nlocal wezterm = require 'wezterm'\nlocal act = wezterm.action\n\n-- ---------------------------------------------------------------------------\n-- Leader key: tmux-style Ctrl+a, tap then release before the next key.\n-- ---------------------------------------------------------------------------\n\nlocal config = {}\nconfig.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }\n\n-- ---------------------------------------------------------------------------\n-- Geometry: single source of truth for the bottom-pane size.\n-- ---------------------------------------------------------------------------\n\n-- pane:split takes a fraction in [0, 1]; SplitPane takes { Percent = n }.\n-- Define the fraction once and derive the percent at each call site.\nlocal BOTTOM_FRACTION = 0.30\nlocal BOTTOM_PERCENT = math.floor(BOTTOM_FRACTION * 100 + 0.5)\n\n-- ---------------------------------------------------------------------------\n-- Tab spawning\n-- ---------------------------------------------------------------------------\n\n-- Inherit cwd from the current pane. spawn_tab does NOT inherit cwd the way\n-- splits do, so pull it explicitly. Recent versions return a Url object;\n-- .file_path unwraps it to a plain path.\nlocal function current_cwd(pane)\n  local cwd = pane:get_current_working_dir()\n  if cwd and cwd.file_path then\n    return cwd.file_path\n  end\n  return nil\nend\n\n-- Spawn a tab pre-split into a 70/30 vertical stack. Lands focus in the\n-- TOP pane (the one you'd edit in), not the freshly-split bottom one.\nlocal function spawn_stacked_tab(window, pane)\n  local tab, first_pane = window:mux_window():spawn_tab {\n    cwd = current_cwd(pane),\n  }\n  first_pane:split { direction = 'Bottom', size = BOTTOM_FRACTION }\n  first_pane:activate()\nend\n\n-- ---------------------------------------------------------------------------\n-- gui-startup: initial session layout\n-- ---------------------------------------------------------------------------\n\n-- Edit this list to reconstruct your standard set of project tabs on boot.\n-- Each entry is { cwd = \"...\", split = true|false }. Empty: no auto-spawned\n-- tabs, WezTerm just opens normally.\nlocal STARTUP_TABS = {}\n\nwezterm.on('gui-startup', function()\n  for i, spec in ipairs(STARTUP_TABS) do\n    local tab, pane, window\n    if i == 1 then\n      tab, pane, window = wezterm.mux.spawn_window { cwd = spec.cwd }\n    else\n      tab, pane = wezterm.mux.spawn_tab { cwd = spec.cwd }\n    end\n    if spec.split then\n      pane:split { direction = 'Bottom', size = BOTTOM_FRACTION }\n      pane:activate()\n    end\n  end\nend)\n\n-- ---------------------------------------------------------------------------\n-- GUI \"+\" button: stack, same as the leader-t binding\n-- ---------------------------------------------------------------------------\n\nwezterm.on('new-tab-button-click', function(window, pane, button, default_action)\n  if default_action and button == 'Left' then\n    spawn_stacked_tab(window, pane)\n    return false -- suppress the default plain tab\n  end\nend)\n\n-- ---------------------------------------------------------------------------\n-- Keybindings\n-- ---------------------------------------------------------------------------\n\nconfig.keys = {\n  -- Stacked tab (the common case): leader-t\n  { key = 't', mods = 'LEADER',\n    action = wezterm.action_callback(spawn_stacked_tab) },\n\n  -- Plain single-pane tab: leader-T (shifted).\n  -- Inherits the pane's domain; cwd inheritance is left to the domain default.\n  { key = 'T', mods = 'LEADER',\n    action = act.SpawnTab 'CurrentPaneDomain' },\n\n  -- Retroactive split: turn a plain tab into the same 70/30 geometry.\n  -- Uses { Percent = n } because SplitPane does not accept a fraction.\n  { key = 's', mods = 'LEADER',\n    action = act.SplitPane {\n      direction = 'Down',\n      size = { Percent = BOTTOM_PERCENT },\n    } },\n\n  -- If you'd rather keep both tab styles under a key table instead of a\n  -- case-sensitive pair, swap the two SpawnTab bindings above for:\n  --\n  --   { key = 't', mods = 'LEADER',\n  --     action = act.ActivateKeyTable { name = 'tab', timeout_milliseconds = 1500 } },\n  --\n  -- and define:\n  --\n  --   config.key_tables = {\n  --     tab = {\n  --       { key = 't', action = wezterm.action_callback(spawn_stacked_tab) },\n  --       { key = 'n', action = act.SpawnTab 'CurrentPaneDomain' },\n  --       { key = 'Escape', action = 'PopKeyTable' },\n  --     },\n  --   },\n}\n\n-- ---------------------------------------------------------------------------\n-- format-tab-title (preserved from the Home Manager profile)\n-- ---------------------------------------------------------------------------\n\nwezterm.on('format-tab-title', function(tab, tabs, panes, conf, hover, max_width)\n  local title = tab.active_pane.title\n\n  if tab.is_active then\n    return title\n  end\n\n  -- Activity dot for background tabs. has_unseen_output is the real field;\n  -- the previous is_activity does not exist and made wezterm log a stack\n  -- traceback on every tab repaint (24 GB of logs before it was caught).\n  if tab.active_pane.has_unseen_output then\n    return {\n      { Background = { Color = '#1a1a2e' } },\n      { Foreground = { Color = '#ff6e40' } },\n      { Attribute = { Intensity = 'Bold' } },\n      { Text = ' \\u{25cf} ' },\n      'ResetAttributes',\n      { Text = title .. ' ' },\n    }\n  end\n\n  return title\nend)\n\nreturn config\n\n-- ---------------------------------------------------------------------------\n-- Integration with Home Manager\n-- ---------------------------------------------------------------------------\n--\n-- ~/.config/wezterm/wezterm.lua is regenerated by Home Manager on every\n-- `home-manager switch`, so editing it directly is futile.\n--\n-- programs.wezterm.extraConfig is types.lines: every module's contribution\n-- gets concatenated into one Lua chunk, wrapped as\n-- `local _hm_extra = (function() <concatenated> end)()`. Lua allows only\n-- one `return` per chunk, so this file's `return config` can't coexist by\n-- concatenation with the shared work profile's own `return {}`\n-- (nix/wp-home-manager/modules/work.nix) -- that's what broke this file\n-- originally.\n--\n-- Fix: nix-home/wezterm/default.nix sets extraConfig with lib.mkForce,\n-- which replaces (rather than concatenates with) the shared module's\n-- contribution. This file duplicates the shared format-tab-title handler\n-- (see above) so nothing is lost by fully overriding it.",
+    "zellij": "default_layout \"two-panes\"\n\nkeybinds clear-defaults=true {\n    locked {\n        bind \"Ctrl g\" { SwitchToMode \"normal\"; }\n    }\n    pane {\n        bind \"left\" { MoveFocus \"left\"; }\n        bind \"down\" { MoveFocus \"down\"; }\n        bind \"up\" { MoveFocus \"up\"; }\n        bind \"right\" { MoveFocus \"right\"; }\n        bind \"c\" { SwitchToMode \"renamepane\"; PaneNameInput 0; }\n        bind \"d\" { NewPane \"down\"; SwitchToMode \"normal\"; }\n        bind \"e\" { TogglePaneEmbedOrFloating; SwitchToMode \"normal\"; }\n        bind \"f\" { ToggleFocusFullscreen; SwitchToMode \"normal\"; }\n        bind \"h\" { MoveFocus \"left\"; }\n        bind \"i\" { TogglePanePinned; SwitchToMode \"normal\"; }\n        bind \"j\" { MoveFocus \"down\"; }\n        bind \"k\" { MoveFocus \"up\"; }\n        bind \"l\" { MoveFocus \"right\"; }\n        bind \"n\" { NewPane; SwitchToMode \"normal\"; }\n        bind \"p\" { SwitchFocus; }\n        bind \"Ctrl p\" { SwitchToMode \"normal\"; }\n        bind \"r\" { NewPane \"right\"; SwitchToMode \"normal\"; }\n        bind \"s\" { NewPane \"stacked\"; SwitchToMode \"normal\"; }\n        bind \"w\" { ToggleFloatingPanes; SwitchToMode \"normal\"; }\n        bind \"z\" { TogglePaneFrames; SwitchToMode \"normal\"; }\n    }\n    tab {\n        bind \"left\" { GoToPreviousTab; }\n        bind \"down\" { GoToNextTab; }\n        bind \"up\" { GoToPreviousTab; }\n        bind \"right\" { GoToNextTab; }\n        bind \"1\" { GoToTab 1; SwitchToMode \"normal\"; }\n        bind \"2\" { GoToTab 2; SwitchToMode \"normal\"; }\n        bind \"3\" { GoToTab 3; SwitchToMode \"normal\"; }\n        bind \"4\" { GoToTab 4; SwitchToMode \"normal\"; }\n        bind \"5\" { GoToTab 5; SwitchToMode \"normal\"; }\n        bind \"6\" { GoToTab 6; SwitchToMode \"normal\"; }\n        bind \"7\" { GoToTab 7; SwitchToMode \"normal\"; }\n        bind \"8\" { GoToTab 8; SwitchToMode \"normal\"; }\n        bind \"9\" { GoToTab 9; SwitchToMode \"normal\"; }\n        bind \"[\" { BreakPaneLeft; SwitchToMode \"normal\"; }\n        bind \"]\" { BreakPaneRight; SwitchToMode \"normal\"; }\n        bind \"b\" { BreakPane; SwitchToMode \"normal\"; }\n        bind \"h\" { GoToPreviousTab; }\n        bind \"j\" { GoToNextTab; }\n        bind \"k\" { GoToPreviousTab; }\n        bind \"l\" { GoToNextTab; }\n        bind \"n\" { NewTab; SwitchToMode \"normal\"; }\n        bind \"r\" { SwitchToMode \"renametab\"; TabNameInput 0; }\n        bind \"s\" { ToggleActiveSyncTab; SwitchToMode \"normal\"; }\n        bind \"Ctrl t\" { SwitchToMode \"normal\"; }\n        bind \"x\" { CloseTab; SwitchToMode \"normal\"; }\n        bind \"tab\" { ToggleTab; }\n    }\n    resize {\n        bind \"left\" { Resize \"Increase left\"; }\n        bind \"down\" { Resize \"Increase down\"; }\n        bind \"up\" { Resize \"Increase up\"; }\n        bind \"right\" { Resize \"Increase right\"; }\n        bind \"+\" { Resize \"Increase\"; }\n        bind \"-\" { Resize \"Decrease\"; }\n        bind \"=\" { Resize \"Increase\"; }\n        bind \"H\" { Resize \"Decrease left\"; }\n        bind \"J\" { Resize \"Decrease down\"; }\n        bind \"K\" { Resize \"Decrease up\"; }\n        bind \"L\" { Resize \"Decrease right\"; }\n        bind \"h\" { Resize \"Increase left\"; }\n        bind \"j\" { Resize \"Increase down\"; }\n        bind \"k\" { Resize \"Increase up\"; }\n        bind \"l\" { Resize \"Increase right\"; }\n        bind \"Ctrl n\" { SwitchToMode \"normal\"; }\n    }\n    move {\n        bind \"left\" { MovePane \"left\"; }\n        bind \"down\" { MovePane \"down\"; }\n        bind \"up\" { MovePane \"up\"; }\n        bind \"right\" { MovePane \"right\"; }\n        bind \"h\" { MovePane \"left\"; }\n        bind \"Ctrl h\" { SwitchToMode \"normal\"; }\n        bind \"j\" { MovePane \"down\"; }\n        bind \"k\" { MovePane \"up\"; }\n        bind \"l\" { MovePane \"right\"; }\n        bind \"n\" { MovePane; }\n        bind \"p\" { MovePaneBackwards; }\n        bind \"tab\" { MovePane; }\n    }\n    scroll {\n        bind \"e\" { EditScrollback; SwitchToMode \"normal\"; }\n        bind \"s\" { SwitchToMode \"entersearch\"; SearchInput 0; }\n    }\n    search {\n        bind \"c\" { SearchToggleOption \"CaseSensitivity\"; }\n        bind \"n\" { Search \"down\"; }\n        bind \"o\" { SearchToggleOption \"WholeWord\"; }\n        bind \"p\" { Search \"up\"; }\n        bind \"w\" { SearchToggleOption \"Wrap\"; }\n    }\n    session {\n        bind \"a\" {\n            LaunchOrFocusPlugin \"zellij:about\" {\n                floating true\n                move_to_focused_tab true\n            }\n            SwitchToMode \"normal\"\n        }\n        bind \"c\" {\n            LaunchOrFocusPlugin \"configuration\" {\n                floating true\n                move_to_focused_tab true\n            }\n            SwitchToMode \"normal\"\n        }\n        bind \"Ctrl o\" { SwitchToMode \"normal\"; }\n        bind \"p\" {\n            LaunchOrFocusPlugin \"plugin-manager\" {\n                floating true\n                move_to_focused_tab true\n            }\n            SwitchToMode \"normal\"\n        }\n        bind \"s\" {\n            LaunchOrFocusPlugin \"zellij:share\" {\n                floating true\n                move_to_focused_tab true\n            }\n            SwitchToMode \"normal\"\n        }\n        bind \"w\" {\n            LaunchOrFocusPlugin \"session-manager\" {\n                floating true\n                move_to_focused_tab true\n            }\n            SwitchToMode \"normal\"\n        }\n    }\n    shared_except \"locked\" {\n        bind \"Alt left\" { MoveFocusOrTab \"left\"; }\n        bind \"Alt down\" { MoveFocus \"down\"; }\n        bind \"Alt up\" { MoveFocus \"up\"; }\n        bind \"Alt right\" { MoveFocusOrTab \"right\"; }\n        bind \"Alt +\" { Resize \"Increase\"; }\n        bind \"Alt -\" { Resize \"Decrease\"; }\n        bind \"Alt =\" { Resize \"Increase\"; }\n        bind \"Alt [\" { PreviousSwapLayout; }\n        bind \"Alt ]\" { NextSwapLayout; }\n        bind \"Alt f\" { ToggleFloatingPanes; }\n        bind \"Ctrl g\" { SwitchToMode \"locked\"; }\n        bind \"Alt h\" { MoveFocusOrTab \"left\"; }\n        bind \"Alt i\" { MoveTab \"left\"; }\n        bind \"Alt j\" { MoveFocus \"down\"; }\n        bind \"Alt k\" { MoveFocus \"up\"; }\n        bind \"Alt l\" { MoveFocusOrTab \"right\"; }\n        bind \"Alt n\" { NewPane; }\n        bind \"Alt o\" { MoveTab \"right\"; }\n        bind \"Alt p\" { TogglePaneInGroup; }\n        bind \"Alt Shift p\" { ToggleGroupMarking; }\n        bind \"Ctrl q\" { Quit; }\n    }\n    shared_except \"locked\" \"move\" {\n        bind \"Ctrl h\" { SwitchToMode \"move\"; }\n    }\n    shared_except \"locked\" \"session\" {\n        bind \"Ctrl o\" { SwitchToMode \"session\"; }\n    }\n    shared_except \"locked\" \"scroll\" \"search\" \"tmux\" {\n        bind \"Ctrl b\" { SwitchToMode \"tmux\"; }\n    }\n    shared_except \"locked\" \"scroll\" \"search\" {\n        bind \"Ctrl s\" { SwitchToMode \"scroll\"; }\n    }\n    shared_except \"locked\" \"tab\" {\n        bind \"Ctrl t\" { SwitchToMode \"tab\"; }\n    }\n    shared_except \"locked\" \"pane\" {\n        bind \"Ctrl p\" { SwitchToMode \"pane\"; }\n    }\n    shared_except \"locked\" \"resize\" {\n        bind \"Ctrl n\" { SwitchToMode \"resize\"; }\n    }\n    shared_except \"normal\" \"locked\" \"entersearch\" {\n        bind \"enter\" { SwitchToMode \"normal\"; }\n    }\n    shared_except \"normal\" \"locked\" \"entersearch\" \"renametab\" \"renamepane\" {\n        bind \"esc\" { SwitchToMode \"normal\"; }\n    }\n    shared_among \"pane\" \"tmux\" {\n        bind \"x\" { CloseFocus; SwitchToMode \"normal\"; }\n    }\n    shared_among \"scroll\" \"search\" {\n        bind \"PageDown\" { PageScrollDown; }\n        bind \"PageUp\" { PageScrollUp; }\n        bind \"left\" { PageScrollUp; }\n        bind \"down\" { ScrollDown; }\n        bind \"up\" { ScrollUp; }\n        bind \"right\" { PageScrollDown; }\n        bind \"Ctrl b\" { PageScrollUp; }\n        bind \"Ctrl c\" { ScrollToBottom; SwitchToMode \"normal\"; }\n        bind \"d\" { HalfPageScrollDown; }\n        bind \"Ctrl f\" { PageScrollDown; }\n        bind \"h\" { PageScrollUp; }\n        bind \"j\" { ScrollDown; }\n        bind \"k\" { ScrollUp; }\n        bind \"l\" { PageScrollDown; }\n        bind \"Ctrl s\" { SwitchToMode \"normal\"; }\n        bind \"u\" { HalfPageScrollUp; }\n    }\n    entersearch {\n        bind \"Ctrl c\" { SwitchToMode \"scroll\"; }\n        bind \"esc\" { SwitchToMode \"scroll\"; }\n        bind \"enter\" { SwitchToMode \"search\"; }\n    }\n    renametab {\n        bind \"esc\" { UndoRenameTab; SwitchToMode \"tab\"; }\n    }\n    shared_among \"renametab\" \"renamepane\" {\n        bind \"Ctrl c\" { SwitchToMode \"normal\"; }\n    }\n    renamepane {\n        bind \"esc\" { UndoRenamePane; SwitchToMode \"pane\"; }\n    }\n    shared_among \"session\" \"tmux\" {\n        bind \"d\" { Detach; }\n    }\n    tmux {\n        bind \"left\" { MoveFocus \"left\"; SwitchToMode \"normal\"; }\n        bind \"down\" { MoveFocus \"down\"; SwitchToMode \"normal\"; }\n        bind \"up\" { MoveFocus \"up\"; SwitchToMode \"normal\"; }\n        bind \"right\" { MoveFocus \"right\"; SwitchToMode \"normal\"; }\n        bind \"space\" { NextSwapLayout; }\n        bind \"\\\"\" { NewPane \"down\"; SwitchToMode \"normal\"; }\n        bind \"%\" { NewPane \"right\"; SwitchToMode \"normal\"; }\n        bind \",\" { SwitchToMode \"renametab\"; }\n        bind \"[\" { SwitchToMode \"scroll\"; }\n        bind \"Ctrl b\" { Write 2; SwitchToMode \"normal\"; }\n        bind \"c\" { NewTab; SwitchToMode \"normal\"; }\n        bind \"h\" { MoveFocus \"left\"; SwitchToMode \"normal\"; }\n        bind \"j\" { MoveFocus \"down\"; SwitchToMode \"normal\"; }\n        bind \"k\" { MoveFocus \"up\"; SwitchToMode \"normal\"; }\n        bind \"l\" { MoveFocus \"right\"; SwitchToMode \"normal\"; }\n        bind \"n\" { GoToNextTab; SwitchToMode \"normal\"; }\n        bind \"o\" { FocusNextPane; }\n        bind \"p\" { GoToPreviousTab; SwitchToMode \"normal\"; }\n        bind \"z\" { ToggleFocusFullscreen; SwitchToMode \"normal\"; }\n    }\n}\n\nplugins {\n    about location=\"zellij:about\"\n    attention location=\"file:/nix/store/6cfmsr1sr96052062mlr6ahhgr18w2s3-zellij-attention.wasm\"\n    compact-bar location=\"zellij:compact-bar\"\n    configuration location=\"zellij:configuration\"\n    filepicker location=\"zellij:strider\" {\n        cwd \"/\"\n    }\n    plugin-manager location=\"zellij:plugin-manager\"\n    session-manager location=\"zellij:session-manager\"\n    status-bar location=\"zellij:status-bar\"\n    strider location=\"zellij:strider\"\n    tab-bar location=\"zellij:tab-bar\"\n    welcome-screen location=\"zellij:session-manager\" {\n        welcome_screen true\n    }\n}\n\nload_plugins {\n    \"file:/nix/store/6cfmsr1sr96052062mlr6ahhgr18w2s3-zellij-attention.wasm\" {\n        enabled \"true\"\n        waiting_icon \"\u23f3\"\n        completed_icon \"\u2705\"\n    }\n}\n\nweb_client {\n    font \"monospace\"\n}\n"
+  }
+}

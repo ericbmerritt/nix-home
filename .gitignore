@@ -22,3 +22,10 @@ devenv.local.yaml
 # Secrets (if any sensitive files - ignore contents except default.nix)
 secrets/*
 !secrets/default.nix
+
+# Local environment and Python test artifacts
+.env
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.ruff_cache/
