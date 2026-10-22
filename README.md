@@ -12,7 +12,7 @@ One repository, separate dependency graphs: the root flake is personal; `flakes/
 
 **Do not use the work entry point on personal machines.** Moving the laptop entry point changes the old root-based rebuild command.
 
-Lascasas keeps its verified NixOS base and adds the selected personal tools described below. Home Manager and the shared personal development environment are a later phase. `nix-home/common.nix` is still a legacy mixed module imported only by the work laptop; the older `r630.nix` and `mac-osx.nix` wrappers are not active host configurations.
+Lascasas keeps its verified NixOS base and adds the selected personal tools described below. A Linux-only Home Manager bootstrap owns the coding agents; broader shell/editor sharing with the Macs remains a later step. `nix-home/common.nix` is still a legacy mixed module imported only by the work laptop; the older `r630.nix` and `mac-osx.nix` wrappers are not active host configurations.
 
 ## Develop and validate
 
@@ -23,7 +23,7 @@ nix develop
 just validate
 ```
 
-These checks use only the personal graph. The developer shell supplies the formatters, linters, Python, and task runner; jj remains the host prerequisite so the shell does not silently select a different jj version for this checkout.
+These checks use only the personal graph. The developer shell supplies the formatters, linters, Python, Node.js, and task runner; jj remains the host prerequisite so the shell does not silently select a different jj version for this checkout.
 
 Work-laptop checks require company SSH access:
 
@@ -65,12 +65,16 @@ No build recipe changes `/etc/nixos`, activates a generation, changes boot defau
 
 ## Personal coding agents on lascasas
 
-The root exports `herdr` and `pi-coding-agent` packages and installs them for `eric` through `users.users.eric.packages`. Only these executables use the separately pinned public `agent-nixpkgs` input; the base system stays on its existing stable pin. No work profile, company agent policies, provider credentials, or Mac Pi configuration is copied.
+The root exports `herdr` and `pi-coding-agent` packages. `hosts/lascasas/home.nix` selects the reusable personal module in `nix-home/personal/agents.nix`, which owns those packages through Home Manager. Home Manager uses the base system's package set and installs its user profile through `/etc/profiles/per-user/eric`; only the agent executables use `agent-nixpkgs`. No work profile, company agent policies, provider credentials, or Mac Pi configuration is copied.
+
+`nix-home/personal/pi-settings.json` is the source of truth for Pi's startup provider and model. Activation uses Pi's pinned SDK to merge only those two settings into the user's writable `~/.pi/agent/settings.json`. Pi's device ID and other preferences are preserved; `auth.json` and sessions are not managed. Changes made in Pi's UI remain writable, but the next activation reapplies the declarative defaults. Existing or resumed sessions can retain their own model selection.
+
+The settings preflight refuses malformed JSON or a symlink instead of replacing it. Home Manager's ordinary file-collision checks remain enabled; this configuration does not force replacements or overwrite backups.
 
 Before activation, check the packaged CLIs from the Linux checkout:
 
 ```bash
-nix develop -c just smoke-agents
+nix develop -c just smoke-agents check-home-linux
 ```
 
 After activation, use a fresh login so the per-user packages are on `PATH`. Start `pi` and use `/login` with a personal provider account. Credentials stay in the user's private Pi configuration, outside Nix.
@@ -98,7 +102,7 @@ The private key and passphrase remain outside the flake and Nix store. Unlock th
 
 ## Pins and ownership
 
-- Root `flake.lock` contains only public inputs. Its base nixpkgs revision matches the lascasas bootstrap; it does not follow Whitepages pins. `agent-nixpkgs` is an independent public pin used only for the selected coding-agent packages.
+- Root `flake.lock` contains only public inputs. Its base nixpkgs revision matches the lascasas bootstrap; it does not follow Whitepages pins. `agent-nixpkgs` is an independent public pin used only for the selected coding-agent packages. Public Home Manager is pinned from `release-26.05` and follows the unchanged base nixpkgs input; its fresh Linux state version is `26.05`.
 - `flakes/work/flake.lock` retains the laptop's coordinated upstream pins. Its published monorepo revision deliberately preserves the native Stack integration instead of following floating `main`.
 - The work entry point consumes the repository root through `path:../..` and selects `hosts/wp-K942Q6VXR7/`; it does not define the laptop's settings inline. Validate portability from a GitHub-fetched revision, without absolute checkout paths or local input overrides.
 - `overlays/zellij-attention.nix` is platform-neutral. The existing direnv test workaround is applied only by the work wrapper.

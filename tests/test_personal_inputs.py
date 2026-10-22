@@ -12,22 +12,31 @@ class PersonalInputTests(unittest.TestCase):
         )
         inputs = lock["nodes"][lock["root"]]["inputs"]
         expected_pins = {
-            "nixpkgs": "cd4ea8d57de16f4810bc5f14207bac45fbf19f67",
-            "agent-nixpkgs": "7a6522c868711d06e3a520bbcdfafe9806f4337f",
+            "nixpkgs": ("NixOS", "nixpkgs", "cd4ea8d57de16f4810bc5f14207bac45fbf19f67"),
+            "agent-nixpkgs": (
+                "NixOS",
+                "nixpkgs",
+                "7a6522c868711d06e3a520bbcdfafe9806f4337f",
+            ),
+            "home-manager": (
+                "nix-community",
+                "home-manager",
+                "24f8f8e786f87d6a818e1746cb2389bf922afdab",
+            ),
         }
         self.assertEqual(set(inputs), set(expected_pins))
         self.assertEqual(set(lock["nodes"]), {lock["root"], *inputs.values()})
-        for name, revision in expected_pins.items():
+        for name, (owner, repo, revision) in expected_pins.items():
             node = lock["nodes"][inputs[name]]
             for field in ("original", "locked"):
                 with self.subTest(input=name, field=field):
                     source = node[field]
                     self.assertEqual(source["type"], "github")
                     self.assertEqual(source.get("host", "github.com"), "github.com")
-                    self.assertEqual(
-                        (source["owner"], source["repo"]), ("NixOS", "nixpkgs")
-                    )
+                    self.assertEqual((source["owner"], source["repo"]), (owner, repo))
                     self.assertEqual(source["rev"], revision)
+        home_manager = lock["nodes"][inputs["home-manager"]]
+        self.assertEqual(home_manager["inputs"], {"nixpkgs": ["nixpkgs"]})
 
 
 if __name__ == "__main__":
