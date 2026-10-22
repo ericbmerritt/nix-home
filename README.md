@@ -12,7 +12,7 @@ One repository, separate dependency graphs: the root flake is personal; `flakes/
 
 **Do not use the work entry point on personal machines.** Moving the laptop entry point changes the old root-based rebuild command.
 
-At this checkpoint, lascasas retains its minimal, verified NixOS bootstrap. Home Manager and the shared personal development environment are the next phase. `nix-home/common.nix` is still a legacy mixed module imported only by the work laptop; the older `r630.nix` and `mac-osx.nix` wrappers are not active host configurations.
+Lascasas keeps its verified NixOS base and adds the selected personal tools described below. Home Manager and the shared personal development environment are a later phase. `nix-home/common.nix` is still a legacy mixed module imported only by the work laptop; the older `r630.nix` and `mac-osx.nix` wrappers are not active host configurations.
 
 ## Develop and validate
 
@@ -43,10 +43,10 @@ jj bookmark set shared-personal-flake -r @
 jj git push --remote origin --bookmark shared-personal-flake
 ```
 
-On lascasas, clone that bookmark into a normal checkout. If jj is not installed yet, first enter `nix-shell -p jujutsu`. The HTTPS clone requires personal GitHub authentication if the repository is private.
+On lascasas, clone that bookmark into a normal checkout using its personal GitHub SSH key, unlocked in the SSH agent. If jj is not installed yet, first enter `nix-shell -p jujutsu`.
 
 ```bash
-jj git clone --colocate --branch shared-personal-flake https://github.com/ericbmerritt/nix-home.git ~/nix-home
+jj git clone --colocate --branch shared-personal-flake git@github.com:ericbmerritt/nix-home.git ~/nix-home
 cd ~/nix-home
 nix develop -c just build-linux
 ```
@@ -63,6 +63,27 @@ nix develop -c just build-linux
 
 No build recipe changes `/etc/nixos`, activates a generation, changes boot defaults, or reboots either host. Deployment remains an explicit, separately approved step after reviewing the evaluated diff and Home Manager dry run where applicable.
 
+## Personal coding agents on lascasas
+
+The root exports `herdr` and `pi-coding-agent` packages and installs them for `eric` through `users.users.eric.packages`. Only these executables use the separately pinned public `agent-nixpkgs` input; the base system stays on its existing stable pin. No work profile, company agent policies, provider credentials, or Mac Pi configuration is copied.
+
+Before activation, check the packaged CLIs from the Linux checkout:
+
+```bash
+nix develop -c just smoke-agents
+```
+
+After activation, use a fresh login so the per-user packages are on `PATH`. Start `pi` and use `/login` with a personal provider account. Credentials stay in the user's private Pi configuration, outside Nix.
+
+Once Pi has created `~/.pi/agent`, install Herdr's bundled public integration:
+
+```bash
+herdr integration install pi
+herdr integration status
+```
+
+Restart Pi after installing the integration. Launch `herdr` in the project directory, then run `pi` in a pane. Neither application is configured to start automatically at boot.
+
 ## SSH agent on lascasas
 
 `programs.ssh.startAgent` enables NixOS's user `ssh-agent` service at login, with its socket at `$XDG_RUNTIME_DIR/ssh-agent`. After activating the configuration, use a fresh Linux login session and unlock the key there:
@@ -77,7 +98,7 @@ The private key and passphrase remain outside the flake and Nix store. Unlock th
 
 ## Pins and ownership
 
-- Root `flake.lock` contains only public inputs. Its nixpkgs revision matches the installed lascasas bootstrap; it does not follow Whitepages pins.
+- Root `flake.lock` contains only public inputs. Its base nixpkgs revision matches the lascasas bootstrap; it does not follow Whitepages pins. `agent-nixpkgs` is an independent public pin used only for the selected coding-agent packages.
 - `flakes/work/flake.lock` retains the laptop's coordinated upstream pins. Its published monorepo revision deliberately preserves the native Stack integration instead of following floating `main`.
 - The work entry point consumes the repository root through `path:../..` and selects `hosts/wp-K942Q6VXR7/`; it does not define the laptop's settings inline. Validate portability from a GitHub-fetched revision, without absolute checkout paths or local input overrides.
 - `overlays/zellij-attention.nix` is platform-neutral. The existing direnv test workaround is applied only by the work wrapper.

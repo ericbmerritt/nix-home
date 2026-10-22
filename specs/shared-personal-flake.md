@@ -72,7 +72,7 @@ Prefer ordinary modules and explicit imports over a configurable host-generation
 | Host | Preserve | Intended change |
 |---|---|---|
 | Whitepages laptop | Current checked-out package pins, work profile, personal behavior, username/home, Darwin state version 4, Home Manager state version 23.05, existing Nix ownership | Select the separate work entry point |
-| Lascasas | Root/EFI UUIDs, GPT/UEFI boot, `megaraid_sas`, microcode, DHCP, hostname/user, password state, key-only SSH, authorized key, power-meter blacklist, system state version 26.05 | Enable the separately approved NixOS user SSH agent; later gain the shared personal development environment and fresh Home Manager state version 26.05 |
+| Lascasas | Root/EFI UUIDs, GPT/UEFI boot, `megaraid_sas`, microcode, DHCP, hostname/user, password state, key-only SSH, authorized key, power-meter blacklist, system state version 26.05 | Enable the separately approved NixOS user SSH agent and public Herdr/Pi executables; later gain the shared personal development environment and fresh Home Manager state version 26.05 |
 | Personal Mac | Existing hardware/user/Nix ownership and state versions, once inspected | Personal configuration without work composition |
 
 Capture the work laptop's evaluated checkout baseline and its running generation separately: any existing deployment drift must not be mislabeled as a refactor regression. Preserve lascasas's current successful generation as rollback.
@@ -96,11 +96,13 @@ No changes to the Whitepages repository, stack registries, jj installations, ser
 
 ## Implementation checkpoint
 
-The phase-1 split is implemented: root personal inputs and `flakes/work/` have separate locks, both machines have modules under `hosts/`, and the work configuration passes its captured baseline assertions. Personal validation, earlier fresh-copy evaluation of both entry points, and a native Linux build have passed. The temporary snapshot helpers have been removed in favor of normal GitHub publication and jj checkouts; publication of the WIP bookmark is explicitly approved. Running generations have not been activated by this work.
+The phase-1 split is implemented: root personal inputs and `flakes/work/` have separate locks, both machines have modules under `hosts/`, and the work configuration passes its captured baseline assertions. Personal validation, earlier fresh-copy evaluation of both entry points, and a native Linux build have passed. The temporary snapshot helpers have been removed in favor of normal GitHub publication and jj checkouts; publication of the WIP bookmark is explicitly approved. The separately approved Linux SSH-agent follow-up, `3f5ba36d`, has since been activated on lascasas; fresh SSH, managed-agent GitHub authentication, and failed-unit checks passed. The work Mac has not been activated by this work.
 
-**Remaining phase-1 gate:** The native Mac build has repeatedly been interrupted while building the existing `stack-workbench` package. No compiler/build error was reported, but the full build has not passed. Keep the phase incomplete until `just build-work-mac` finishes; do not start activation or call this runtime-verified sharing. Personal Home Manager adoption remains phase 2.
+**Remaining phase-1 gate:** The native Mac build has repeatedly been interrupted while building the existing `stack-workbench` package. No compiler/build error was reported, but the full build has not passed. Keep the phase incomplete until `just build-work-mac` finishes; do not activate the work Mac or call this runtime-verified sharing across both hosts. Personal Home Manager adoption remains phase 2.
 
-**Approved Linux addition:** Manage the user SSH agent with `programs.ssh.startAgent`, using NixOS's runtime socket rather than a manual agent process. Private keys and passphrases stay outside the repository and Nix store; unlocking remains interactive after agent restart. Activation still requires separate approval.
+**Approved Linux additions:** Manage the user SSH agent with `programs.ssh.startAgent`, using NixOS's runtime socket rather than a manual agent process. Private keys and passphrases stay outside the repository and Nix store; unlocking remains interactive after agent restart. This addition has been activated with separate approval.
+
+Install the public Herdr and Pi executables for Eric without waiting for the broader Home Manager migration. Use a separately pinned public nixpkgs input for these packages, preserving the base system and existing work pins. Do not copy company extensions, policies, or provider credentials. Package smoke checks require no model credentials; actual Pi model use requires personal login on Linux. This package addition still requires separate activation approval.
 
 ## Open questions and gates
 

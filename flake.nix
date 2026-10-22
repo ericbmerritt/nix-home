@@ -1,17 +1,27 @@
 {
   description = "Eric Merritt's personal system configuration";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/cd4ea8d57de16f4810bc5f14207bac45fbf19f67";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/cd4ea8d57de16f4810bc5f14207bac45fbf19f67";
+    # Only the agent executables use this pin; the base system stays on stable.
+    agent-nixpkgs.url = "github:NixOS/nixpkgs/7a6522c868711d06e3a520bbcdfafe9806f4337f";
+  };
 
   outputs = {
     self,
     nixpkgs,
+    agent-nixpkgs,
     ...
   }: let
     systems = ["aarch64-darwin" "x86_64-linux"];
     forAllSystems = nixpkgs.lib.genAttrs systems;
   in {
+    packages = forAllSystems (system: {
+      inherit (agent-nixpkgs.legacyPackages.${system}) herdr pi-coding-agent;
+    });
+
     nixosConfigurations.lascasas = nixpkgs.lib.nixosSystem {
+      specialArgs.agentPackages = self.packages.x86_64-linux;
       modules = [./hosts/lascasas];
     };
 

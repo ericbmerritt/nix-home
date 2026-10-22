@@ -42,6 +42,10 @@ config.assertions
     message = "Lascasas must start its user SSH agent at the managed runtime socket.";
   }
   {
+    assertion = map (package: package.pname) config.users.users.eric.packages == ["herdr" "pi-coding-agent"];
+    message = "Lascasas must install only the selected personal coding agents for Eric.";
+  }
+  {
     assertion = config.system.stateVersion == "26.05" && config.swapDevices == [];
     message = "Lascasas must retain its state version and existing swap configuration.";
   }

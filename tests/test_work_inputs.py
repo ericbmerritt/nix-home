@@ -51,11 +51,14 @@ class WorkInputTests(unittest.TestCase):
         shared = lock["nodes"][inputs["personal"]]
         self.assertEqual(shared["locked"], {"path": "../..", "type": "path"})
         self.assertEqual(shared["parent"], [])
-        public = lock["nodes"][shared["inputs"]["nixpkgs"]]["locked"]
-        self.assertEqual(
-            public,
-            root["nodes"][root["nodes"][root["root"]]["inputs"]["nixpkgs"]]["locked"],
-        )
+        public_inputs = root["nodes"][root["root"]]["inputs"]
+        self.assertEqual(set(shared["inputs"]), set(public_inputs))
+        for name, node in public_inputs.items():
+            with self.subTest(input=name):
+                self.assertEqual(
+                    lock["nodes"][shared["inputs"][name]]["locked"],
+                    root["nodes"][node]["locked"],
+                )
 
 
 if __name__ == "__main__":

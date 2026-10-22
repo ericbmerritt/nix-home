@@ -68,6 +68,14 @@ eval-work:
 
 eval-hosts: eval-personal eval-work
 
+# Check the public agent executables on Linux without model credentials.
+smoke-agents:
+    @test "$(uname -s)" = Linux || { echo "Run smoke-agents on lascasas." >&2; exit 1; }
+    nix run --no-write-lock-file .#herdr -- --version
+    nix run --no-write-lock-file .#pi-coding-agent -- --version
+    nix run --no-write-lock-file .#herdr -- --help >/dev/null
+    nix run --no-write-lock-file .#pi-coding-agent -- --help >/dev/null
+
 # Run from the GitHub-backed checkout on lascasas, without activation.
 build-linux:
     @test "$(uname -s)" = Linux || { echo "Run build-linux from the repository checkout on lascasas." >&2; exit 1; }

@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  agentPackages,
+  ...
+}: {
   imports = [./hardware-configuration.nix];
 
   boot = {
@@ -17,6 +21,7 @@
   users.users.eric = {
     isNormalUser = true;
     extraGroups = ["wheel" "networkmanager"];
+    packages = [agentPackages.herdr agentPackages.pi-coding-agent];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID9wXYxlwnmE4jm7EpzxEPS6sVXowEiaEsXS6FjJSXCO emerritt@ip-192-168-1-100.us-west-2.compute.internal"
     ];
