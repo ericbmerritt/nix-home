@@ -63,6 +63,18 @@ nix develop -c just build-linux
 
 No build recipe changes `/etc/nixos`, activates a generation, changes boot defaults, or reboots either host. Deployment remains an explicit, separately approved step after reviewing the evaluated diff and Home Manager dry run where applicable.
 
+## SSH agent on lascasas
+
+`programs.ssh.startAgent` enables NixOS's user `ssh-agent` service at login, with its socket at `$XDG_RUNTIME_DIR/ssh-agent`. After activating the configuration, use a fresh Linux login session and unlock the key there:
+
+```bash
+ssh-add ~/.ssh/id_ed25519
+```
+
+Do not start a second agent with `eval "$(ssh-agent -s)"`. An existing shell may still point at that old manual agent; reconnect, or explicitly set `SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent"` before `ssh-add`. Non-login automation may also need that environment variable explicitly.
+
+The private key and passphrase remain outside the flake and Nix store. Unlock the key again whenever the agent restarts; enabling the service does not decrypt it automatically.
+
 ## Pins and ownership
 
 - Root `flake.lock` contains only public inputs. Its nixpkgs revision matches the installed lascasas bootstrap; it does not follow Whitepages pins.

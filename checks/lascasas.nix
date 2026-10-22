@@ -38,6 +38,10 @@ config.assertions
     message = "Lascasas must retain key-only SSH with root login disabled.";
   }
   {
+    assertion = config.programs.ssh.startAgent && builtins.elem "default.target" config.systemd.user.services.ssh-agent.wantedBy && builtins.match ".*-a %t/ssh-agent" config.systemd.user.services.ssh-agent.serviceConfig.ExecStart != null;
+    message = "Lascasas must start its user SSH agent at the managed runtime socket.";
+  }
+  {
     assertion = config.system.stateVersion == "26.05" && config.swapDevices == [];
     message = "Lascasas must retain its state version and existing swap configuration.";
   }
