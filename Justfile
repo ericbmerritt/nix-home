@@ -79,6 +79,8 @@ eval-work:
 
 eval-hosts: eval-personal eval-work
 
+check-personal-settings: eval-personal
+
 # Check the public agent executables on Linux without model credentials.
 smoke-agents:
     @test "$(uname -s)" = Linux || { echo "Run smoke-agents on lascasas." >&2; exit 1; }
@@ -86,6 +88,27 @@ smoke-agents:
     nix run --no-write-lock-file .#pi-coding-agent -- --version
     nix run --no-write-lock-file .#herdr -- --help >/dev/null
     nix run --no-write-lock-file .#pi-coding-agent -- --help >/dev/null
+
+# Validate the staged portable profile, including JJ identity, before activation.
+smoke-personal-linux:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    test "$(uname -s)" = Linux || { echo "Run smoke-personal-linux on lascasas." >&2; exit 1; }
+    generation=$(nix eval --raw --no-write-lock-file '.#nixosConfigurations.lascasas.config.home-manager.users.eric.home.activationPackage')
+    profile=$(nix eval --raw --no-write-lock-file '.#nixosConfigurations.lascasas.config.home-manager.users.eric.home.path')
+    export PATH="$profile/bin:$PATH"
+    jj --version
+    test "$(jj --config-file "$generation/home-files/.config/jj/config.toml" config get user.name)" = 'Eric Merritt'
+    test "$(jj --config-file "$generation/home-files/.config/jj/config.toml" config get user.email)" = 'eric@merritt.tech'
+    test "$(git config --file "$generation/home-files/.config/git/config" --get user.email)" = 'eric@merritt.tech'
+    zsh -n "$generation/home-files/.zshrc"
+    bash -n "$generation/home-files/.bashrc"
+    XDG_CONFIG_HOME="$generation/home-files/.config" hx --health
+    nvim --version
+    zellij --version
+    codex --version
+    direnv version
+    fzf --version
 
 # Read-only settings preflight and Home Manager collision/dry-run checks.
 check-home-linux:

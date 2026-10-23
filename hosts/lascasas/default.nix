@@ -33,7 +33,10 @@
     users.eric = import ./home.nix;
   };
 
-  programs.ssh.startAgent = true;
+  programs = {
+    ssh.startAgent = true;
+    zsh.enable = true;
+  };
 
   services.openssh = {
     enable = true;

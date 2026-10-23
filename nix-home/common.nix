@@ -1,29 +1,18 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }: {
   imports = [
     ./helix/default.nix
-    ./wezterm/default.nix
     ./zellij/default.nix
   ];
-
-  # whitepages-nix's work module points netrc-file at ~/.config/nix/netrc, but
-  # Determinate Nix owns netrc and refuses to authenticate while the option
-  # names any other path (`determinate-nixd status` errors, FlakeHub logs out).
-  # The dev-cache credentials get merged into Determinate's file instead, via
-  # authentication.additionalNetrcSources in /etc/determinate/config.json.
-  nix.settings.netrc-file = lib.mkForce "/nix/var/determinate/netrc";
 
   home = {
     sessionPath = [
       "${config.home.homeDirectory}/go/bin"
       "${config.home.homeDirectory}/.local/bin"
       "${config.home.homeDirectory}/.cargo/bin"
-      "/opt/homebrew/bin"
-      "/opt/homebrew/sbin"
     ];
 
     packages = with pkgs; [
@@ -43,7 +32,6 @@
       python3
       tree
       fd
-      meld
       kubectl
       kubernetes-helm
       podman
@@ -51,16 +39,7 @@
       codex
       jjui
       difftastic
-      herdr
     ];
-
-    # cmux is installed from the read-only Nix store; Sparkle's updater
-    # can't write there (and its host-bundle lookup fails when launched via
-    # the bin/ symlink), so disable its update checks.
-    activation.disableCmuxSparkle = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      run /usr/bin/defaults write com.cmuxterm.app SUEnableAutomaticChecks -bool false
-      run /usr/bin/defaults write com.cmuxterm.app SUAutomaticallyUpdate -bool false
-    '';
   };
 
   programs = {
@@ -141,15 +120,7 @@
       '';
     };
 
-    jujutsu = {
-      enable = true;
-      settings = {
-        user = {
-          name = "Eric Merritt";
-          email = "emerritt@whitepages.com";
-        };
-      };
-    };
+    jujutsu.enable = true;
 
     command-not-found.enable = true;
 
@@ -171,15 +142,7 @@
       nix-direnv = {enable = true;};
     };
 
-    git = {
-      enable = true;
-      settings = {
-        user = {
-          name = "Eric Merritt";
-          email = "emerritt@whitepages.com";
-        };
-      };
-    };
+    git.enable = true;
 
     fzf = {
       enable = true;
@@ -192,9 +155,6 @@
       # Opt out of home-manager's implicit `*` defaults (deprecated); we set
       # only what we actually want in settings."*" below.
       enableDefaultConfig = false;
-      includes = [
-        "${config.home.homeDirectory}/.colima/ssh_config"
-      ];
       # `settings` replaces the deprecated `matchBlocks` and is freeform over
       # upstream ssh_config(5) directive names, not home-manager's camelCase
       # aliases: AddKeysToAgent, not addKeysToAgent.
@@ -204,13 +164,6 @@
         };
         "github.com" = {
           IdentityFile = "~/.ssh/id_ed25519";
-        };
-        "github.dev.pages" = {
-          IdentityFile = "~/.ssh/id_ed25519";
-        };
-        "lascasas" = {
-          HostName = "lascasas";
-          User = "eric";
         };
       };
     };

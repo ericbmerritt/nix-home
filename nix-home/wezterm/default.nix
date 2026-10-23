@@ -1,5 +1,5 @@
 {lib, ...}: {
-  # wezterm itself (enable) comes from the whitepages-nix work profile.
+  # Desktop composition enables WezTerm; this module owns its preferences.
   # extraConfig is types.lines, so contributions normally concatenate --
   # but this file's extra-config.lua ends in `return config`, and Lua
   # allows only one `return` per chunk, so it can't coexist by

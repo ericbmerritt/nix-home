@@ -27,11 +27,18 @@
 
     nixosConfigurations.lascasas = nixpkgs.lib.nixosSystem {
       specialArgs.agentPackages = self.packages.x86_64-linux;
-      modules = [home-manager.nixosModules.home-manager ./hosts/lascasas];
+      modules = [
+        home-manager.nixosModules.home-manager
+        ./hosts/lascasas
+        {nixpkgs.overlays = [self.overlays.default];}
+      ];
     };
 
     homeManagerModules = {
       agents = import ./nix-home/personal/agents.nix;
+      common = import ./nix-home/common.nix;
+      darwin = import ./nix-home/darwin.nix;
+      desktop = import ./nix-home/desktop.nix;
       helix = import ./nix-home/helix;
       wezterm = import ./nix-home/wezterm;
       zellij = import ./nix-home/zellij;

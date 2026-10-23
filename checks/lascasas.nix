@@ -4,6 +4,7 @@
   piDefaults = builtins.fromJSON (builtins.readFile ../nix-home/personal/pi-settings.json);
 in
   config.assertions
+  ++ (import ./personal-settings.nix {inherit config;})
   ++ [
     {
       assertion = config.nixpkgs.hostPlatform.system == "x86_64-linux" && config.system.nixos.release == "26.05";

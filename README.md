@@ -12,7 +12,7 @@ One repository, separate dependency graphs: the root flake is personal; `flakes/
 
 **Do not use the work entry point on personal machines.** Moving the laptop entry point changes the old root-based rebuild command.
 
-Lascasas keeps its verified NixOS base and adds the selected personal tools described below. A Linux-only Home Manager bootstrap owns the coding agents; broader shell/editor sharing with the Macs remains a later step. `nix-home/common.nix` is still a legacy mixed module imported only by the work laptop; the older `r630.nix` and `mac-osx.nix` wrappers are not active host configurations.
+Lascasas keeps its verified NixOS base and adds the selected personal tools described below. Both current hosts import the portable `nix-home/common.nix` through Home Manager. Platform, desktop, and work settings are selected separately. The older `r630.nix` and `mac-osx.nix` wrappers are not active host configurations.
 
 ## Develop and validate
 
@@ -62,6 +62,20 @@ nix develop -c just build-linux
 `build-linux` is a native build recipe: run it from the checkout on lascasas, not from the Mac. It does not transfer source files over SSH or require sudo.
 
 No build recipe changes `/etc/nixos`, activates a generation, changes boot defaults, or reboots either host. Deployment remains an explicit, separately approved step after reviewing the evaluated diff and Home Manager dry run where applicable.
+
+## Shared personal environment
+
+| Configuration | Owner |
+|---|---|
+| Public CLI packages, Git/JJ enablement, Helix, Neovim, Zellij, Starship, Zsh, direnv, fzf, and public SSH preferences | `nix-home/common.nix`, imported by both hosts |
+| WezTerm and Meld | Explicit `nix-home/desktop.nix`, not selected on lascasas |
+| Homebrew paths, Colima SSH include, and cmux updater action | Explicit `nix-home/darwin.nix`, not selected on Linux |
+| Git/JJ identity | Each host's home configuration: personal email on lascasas, work email on the laptop |
+| Enterprise SSH and Determinate netrc integration | Work-laptop host only |
+
+Lascasas keeps Bash as its login shell. Home Manager configures its Bash startup to load the user environment and shell integrations; Zsh is also configured and available. No password, SSH host key, private key, or provider credential is managed here.
+
+Before activation, `nix develop -c just smoke-personal-linux` checks the staged Git/JJ identity, shell syntax, and portable executables. `check-home-linux` still checks unmanaged-file collisions rather than overwriting them.
 
 ## Personal coding agents on lascasas
 
