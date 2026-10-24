@@ -110,7 +110,9 @@ Restart Pi after installing the integration. Launch `herdr` in the project direc
 ssh-add ~/.ssh/id_ed25519
 ```
 
-Do not start a second agent with `eval "$(ssh-agent -s)"`. An existing shell may still point at that old manual agent; reconnect, or explicitly set `SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent"` before `ssh-add`. Non-login automation may also need that environment variable explicitly.
+Lascasas's SSH client sets `IdentityAgent /run/user/%i/ssh-agent` (`%i` is the local UID). SSH and Git using OpenSSH therefore use the managed Linux agent even if a persistent Herdr/Pi session has a stale `SSH_AUTH_SOCK`. This intentionally prefers the local agent over a forwarded or Herdr-proxied agent; the setting is host-only and does not change either Mac's SSH configuration.
+
+Do not start a second agent with `eval "$(ssh-agent -s)"`. Switching agents does not update the environment of existing shells, Herdr servers, or Pi processes. `ssh-add` and other direct agent clients do not read SSH's `IdentityAgent` setting: reconnect, or explicitly run `export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent"` in the affected shell before using them. This override does not recreate Herdr's proxy or rewrite running processes' environments.
 
 The private key and passphrase remain outside the flake and Nix store. Unlock the key again whenever the agent restarts; enabling the service does not decrypt it automatically.
 

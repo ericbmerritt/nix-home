@@ -101,6 +101,7 @@ smoke-personal-linux:
     test "$(jj --config-file "$generation/home-files/.config/jj/config.toml" config get user.name)" = 'Eric Merritt'
     test "$(jj --config-file "$generation/home-files/.config/jj/config.toml" config get user.email)" = 'eric@merritt.tech'
     test "$(git config --file "$generation/home-files/.config/git/config" --get user.email)" = 'eric@merritt.tech'
+    SSH_AUTH_SOCK=/dev/null ssh -F "$generation/home-files/.ssh/config" -G git@github.com | grep -Fx "identityagent /run/user/$(id -u)/ssh-agent"
     zsh -n "$generation/home-files/.zshrc"
     bash -n "$generation/home-files/.bashrc"
     XDG_CONFIG_HOME="$generation/home-files/.config" hx --health

@@ -23,6 +23,10 @@ in [
     message = "Personal SSH must keep the public GitHub settings without company, Colima, or Determinate configuration.";
   }
   {
+    assertion = home.programs.ssh.settings."*".data.IdentityAgent == "/run/user/%i/ssh-agent";
+    message = "Lascasas SSH must use its managed user agent even when persistent sessions inherit a stale SSH_AUTH_SOCK.";
+  }
+  {
     assertion = config.programs.zsh.enable && home.programs.bash.enable && config.users.users.eric.shell.shellPath == "/bin/bash" && config.users.users.eric.shell == config.users.defaultUserShell;
     message = "Zsh must be available without changing the existing default login shell.";
   }
